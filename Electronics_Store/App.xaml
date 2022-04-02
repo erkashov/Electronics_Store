@@ -1,0 +1,12 @@
+﻿<Application x:Class="Electronics_Store.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Electronics_Store"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style TargetType="Label" x:Key="labelSt">
+            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="FontFamily" Value="Comic Sans MS"></Setter>
+        </Style>
+    </Application.Resources>
+</Application>

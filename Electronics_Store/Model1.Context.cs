@@ -18,7 +18,6 @@ namespace Electronics_Store
     public partial class МагазинЭлектроникиEntities : DbContext
     {
         private static МагазинЭлектроникиEntities _context;
-
         public static МагазинЭлектроникиEntities GetContext()
         {
             if (_context == null)

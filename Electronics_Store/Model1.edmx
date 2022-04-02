@@ -35,8 +35,9 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idTov" Type="int" Nullable="false" />
-          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="date" Type="date" />
           <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="countTov" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Продажа">
           <Key>
@@ -55,8 +56,8 @@
           <Property Name="manufacture" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="price" Type="money" Nullable="false" />
-          <Property Name="warrantyPeriod" Type="date" Nullable="false" />
+          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="warrantyPeriod" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="number" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Поставка_Товар">
@@ -180,9 +181,10 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idTov" Type="Int32" Nullable="false" />
-          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="date" Type="DateTime" Precision="0" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Товар" Relationship="Self.FK_Поставка_Товар" FromRole="Поставка" ToRole="Товар" />
+          <Property Name="countTov" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Продажа">
           <Key>
@@ -203,8 +205,8 @@
           <Property Name="manufacture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="warrantyPeriod" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="warrantyPeriod" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="number" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Поставка" Relationship="Self.FK_Поставка_Товар" FromRole="Товар" ToRole="Поставка" />
           <NavigationProperty Name="Продажа" Relationship="Self.FK_Продажа_Товар" FromRole="Товар" ToRole="Продажа" />
@@ -340,6 +342,7 @@
           <EntitySetMapping Name="Поставка">
             <EntityTypeMapping TypeName="МагазинЭлектроникиModel.Поставка">
               <MappingFragment StoreEntitySet="Поставка">
+                <ScalarProperty Name="countTov" ColumnName="countTov" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="idTov" ColumnName="idTov" />
                 <ScalarProperty Name="date" ColumnName="date" />

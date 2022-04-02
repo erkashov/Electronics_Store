@@ -25,8 +25,8 @@ namespace Electronics_Store
         public string manufacture { get; set; }
         public string name { get; set; }
         public string type { get; set; }
-        public decimal price { get; set; }
-        public System.DateTime warrantyPeriod { get; set; }
+        public int price { get; set; }
+        public string warrantyPeriod { get; set; }
         public int number { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

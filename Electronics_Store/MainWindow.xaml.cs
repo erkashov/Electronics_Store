@@ -42,15 +42,30 @@ namespace Electronics_Store
         {
             foreach (Пользователь User in МагазинЭлектроникиEntities.GetContext().Пользователь)
             {
-                if(User.login == loginTb.Text && User.password == passwordTb.Text)
+                if (User.login == loginTb.Text && User.password == passwordTb.Text)
                 {
-                    ManagerForm managerForm = new ManagerForm(this);
-                    managerForm.Visibility = Visibility.Visible;
+                    if (User.role == "Менеджер")
+                    {
+                        ManagerForm Form = new ManagerForm(this);
+                        Form.Visibility = Visibility.Visible;
+                    }
+                    if (User.role == "Администратор")
+                    {
+                        AdminForm Form = new AdminForm(this);
+                        Form.Visibility = Visibility.Visible;
+                    }
+                    if (User.role == "Пользователь")
+                    {
+                        UserForm Form = new UserForm(this);
+                        Form.Visibility = Visibility.Visible;
+                    }
                     this.Visibility = Visibility.Hidden;
+                    loginTb.Text = "";
+                    passwordTb.Text = "";
+                    return;
                 }
             }
-            loginTb.Text = "";
-            passwordTb.Text = "";
+            MessageBox.Show("Логин или пароль введен неверно!");
         }
     }
 }

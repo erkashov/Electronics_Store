@@ -16,8 +16,9 @@ namespace Electronics_Store
     {
         public int id { get; set; }
         public int idTov { get; set; }
-        public System.DateTime date { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
         public string status { get; set; }
+        public int countTov { get; set; }
     
         public virtual Товар Товар { get; set; }
     }

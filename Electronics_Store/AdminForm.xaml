@@ -5,8 +5,170 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Electronics_Store"
         mc:Ignorable="d"
-        Title="AdminForm" Height="450" Width="800">
+        Title="AdminForm" Height="430" Width="1100" Closing="Window_Closing"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Товары"></TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="7*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid Grid.Column="1"   x:Name="dataGridt" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Width="0.5*" Binding="{Binding id}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Наименование" Width="1.5*" Binding="{Binding name}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Тип" Width="2.1*" Binding="{Binding type}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Производитель" Width="1.3*" Binding="{Binding manufacture}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Цена" Width="*" Binding="{Binding price}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Срок гарантии" Width="1.3*" Binding="{Binding warrantyPeriod}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Количество" Width="*" Binding="{Binding number}"></DataGridTextColumn>
+                            <DataGridTemplateColumn Width="auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Редактировать" Name="BtnEditT" Click="BtnEditT_Click" Background="#FFFFF6CC"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Удалить" Name="BtnDelT" Click="BtnDelT_Click"  Background="#FFFFCCCC" ></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel>
+                        <Label Content="Наименование" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+                        <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="nameTTB"></TextBox>
+                        <Label Content="Тип" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+                        <ComboBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="typeTCB">
+                            <ComboBoxItem>
+                                <TextBlock Text="Компьютеры и ноутбуки"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Комплектующие для пк"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Переферия и аксессуары"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Смартфоны и гаджеты"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Планшеты"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Фототехника"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Телевизоры и аксессуары"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Консоли и видиоигры"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Смартфоны и гаджеты"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Аудиотехника"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Бытовая техника"></TextBlock>
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <Label Content="Производитель" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+                        <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="manufactureTTB"></TextBox>
+                        <Label Content="Цена" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+                        <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="priceTTB"></TextBox>
+                        <Label Content="Срок гарантии" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+                        <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="warperTTB"></TextBox>
+                        <Label Content="Количество" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+                        <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="numberTTB"></TextBox>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Margin="10 10 10 0" FontFamily="Comic Sans MS" Height="30" FontSize="14" Content="Сохранить" Name="SaveOrCreateBut" Click="SaveOrCreateBut_Click" Background="#FFCCFAFF" ></Button>
+                            <Button Grid.Column="1" Click="ResetBut_Click" Margin="10 10 10 0" FontFamily="Comic Sans MS" Height="30" FontSize="14" Name="ResetBut" Content="Сброс" Background="#FFFFCCCC"></Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Поставки"></TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="7*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid Grid.Column="1" ItemsSource="{Binding pos1s}" x:Name="dataGridPos" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Width="0.5*" Binding="{Binding id}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Наименование" Width="*" Binding="{Binding name}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Производитель" Width="1.2*" Binding="{Binding manufacture}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Ожидаемая дата" Width="*" Binding="{Binding date}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Статус" Width="*" Binding="{Binding status}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Количество" Width="*" Binding="{Binding countTov}"></DataGridTextColumn>
+
+                            <DataGridTemplateColumn Width="auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Редактировать" Name="BtnEditP" Click="BtnEditP_Click" Background="#FFFFF6CC"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Удалить" Name="BtnDelP" Click="BtnDelP_Click" Background="#FFFFCCCC" ></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel>
+                        <Label Content="Наименование" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+                        <ComboBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="nameTPTB">
+                        </ComboBox>
+                        <Label Content="Производитель" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+                        <ComboBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="manufTPTB" SelectionChanged="manufTPTB_SelectionChanged">
+                        </ComboBox>
+                        <Label Content="Ожидаемая дата поставки" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+                        <DatePicker Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="dateTPTB"></DatePicker>
+                        <Label Content="Статус" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+                        <ComboBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="StatusTPTB">
+                            <ComboBoxItem Background="#FF64FF64">
+                                <TextBlock Text="Получена"/>
+                            </ComboBoxItem>
+                            <ComboBoxItem Background="#FFFFFF64">
+                                <TextBlock Text="В пути"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem Background="#FFFF6464">
+                                <TextBlock Text="У производителя"></TextBlock>
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <Label Content="Количество товаров" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+                        <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="numberTPTB"></TextBox>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Margin="10 10 10 0" FontFamily="Comic Sans MS" Height="30" FontSize="14" Content="Сохранить" Background="#FFCCFAFF" Name="SaveOrCreateTP" Click="SaveOrCreateTP_Click"></Button>
+                            <Button Grid.Column="1" Margin="10 10 10 0" FontFamily="Comic Sans MS" Height="30" FontSize="14" Content="Сброс" Background="#FFFFCCCC" Name="resetTP" Click="ResetTP_Click"></Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

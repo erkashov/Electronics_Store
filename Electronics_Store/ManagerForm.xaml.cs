@@ -68,6 +68,21 @@ namespace Electronics_Store
                             Пользователь user = МагазинЭлектроникиEntities.GetContext().Пользователь.ToList()[j];
                             if (user.id == CurrentUser.id)
                             {
+                                foreach (Пользователь userr in МагазинЭлектроникиEntities.GetContext().Пользователь)
+                                {
+                                    if (userr.id == CurrentUser.id)
+                                        continue;
+                                    if (userr.name == NameTB.Text && userr.papaname == PapanameTB.Text && userr.fullname == FullnameTB.Text)
+                                    {
+                                        MessageBox.Show("Пользователь с таким ФИО уже существует");
+                                        return;
+                                    }
+                                    if (userr.login == LoginTB.Text || userr.password == PasswordTB.Text)
+                                    {
+                                        MessageBox.Show("Пользователь с таким логином или паролем уже существует");
+                                        return;
+                                    }
+                                }
                                 user.name = NameTB.Text;
                                 user.fullname = FullnameTB.Text;
                                 user.email = EmailTB.Text;

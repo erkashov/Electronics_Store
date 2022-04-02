@@ -19,9 +19,16 @@ namespace Electronics_Store
     /// </summary>
     public partial class UserForm : Window
     {
-        public UserForm()
+        private MainWindow mv;
+        public UserForm(MainWindow main)
         {
             InitializeComponent();
+            mv = main;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            mv.Visibility = Visibility.Visible;
         }
     }
 }

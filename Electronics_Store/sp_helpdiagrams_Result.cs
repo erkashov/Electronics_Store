@@ -10,17 +10,13 @@
 namespace Electronics_Store
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Сотрудник
+    public partial class sp_helpdiagrams_Result
     {
-        public int id { get; set; }
-        public string fullname { get; set; }
-        public string name { get; set; }
-        public string patronymic { get; set; }
-        public int phone { get; set; }
-        public byte[] photo { get; set; }
-    
-        public virtual Пользователь Пользователь { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

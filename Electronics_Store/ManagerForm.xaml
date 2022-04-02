@@ -5,8 +5,70 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Electronics_Store"
         mc:Ignorable="d"
-        Title="ManagerForm" Height="450" Width="800">
+        Title="ManagerForm" Height="500" Width="1500"
+        WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="7*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid Grid.Column="1"   x:Name="dataGrid" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Width="0.5*" Binding="{Binding id}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding fullname}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Отчество" Width="*" Binding="{Binding papaname}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Телефон" Width="1.2*" Binding="{Binding phone}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Логин" Width="*" Binding="{Binding login}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Пароль" Width="*" Binding="{Binding password}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Почта" Width="2*" Binding="{Binding email}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Роль" Width="1.2*" Binding="{Binding role}"></DataGridTextColumn>
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать" Name="BtnEdit" Click="BtnEdit_Click" Background="#FFFFF6CC"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Удалить" Name="BtnDel" Click="BtnDel_Click" Background="#FFFFCCCC" ></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel>
+            <Label Content="Фамилия" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="FullnameTB"></TextBox>
+            <Label Content="Имя" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="NameTB"></TextBox>
+            <Label Content="Отчество" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="PapanameTB"></TextBox>
+            <Label Content="Телефон" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="PhoneTB"></TextBox>
+            <Label Content="Логин" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="LoginTB"></TextBox>
+            <Label Content="Пароль" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="PasswordTB"></TextBox>
+            <Label Content="Почта" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="EmailTB"></TextBox>
+            <Label Content="Роль" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
+            <ComboBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="RoleCB">
+                <ComboBoxItem Content="Пользователь"></ComboBoxItem>
+                <ComboBoxItem Content="Администратор"></ComboBoxItem>
+                <ComboBoxItem Content="Менеджер"></ComboBoxItem>
+            </ComboBox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Margin="10 10 10 0" FontFamily="Comic Sans MS" Height="30" FontSize="14" Content="Сохранить" Background="#FFCCFAFF" Click="Button_Click"></Button>
+                <Button Grid.Column="1" Margin="10 10 10 0" FontFamily="Comic Sans MS" Height="30" FontSize="14" Content="Сброс" Background="#FFFFCCCC" Click="Button_Click_1"></Button>
+            </Grid>
+            
+        </StackPanel>
     </Grid>
 </Window>

@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Electronics_Store"
         mc:Ignorable="d"
-        Title="MainWindow" Height="238.129" Width="293.863">
+        Title="MainWindow" Height="238.129" Width="293.863"
+         WindowStartupLocation="CenterScreen"
+        >
     <Grid>
         <StackPanel>
             <Label  Content="Вход" FontWeight="Bold" HorizontalAlignment="Center" FontSize="18" Margin="0 10 0 0" FontFamily="Comic Sans MS"></Label>

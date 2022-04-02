@@ -25,17 +25,32 @@ namespace Electronics_Store
             InitializeComponent();
         }
 
+        /*
+        private static МагазинЭлектроникиEntities _context;
+
+        public static МагазинЭлектроникиEntities GetContext()
+        {
+            if(_context == null)
+            {
+                _context = new МагазинЭлектроникиEntities();
+            }
+            return _context;
+        }
+         */
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             foreach (Пользователь User in МагазинЭлектроникиEntities.GetContext().Пользователь)
             {
                 if(User.login == loginTb.Text && User.password == passwordTb.Text)
                 {
-                    ManagerForm managerForm = new ManagerForm();
+                    ManagerForm managerForm = new ManagerForm(this);
                     managerForm.Visibility = Visibility.Visible;
                     this.Visibility = Visibility.Hidden;
                 }
             }
+            loginTb.Text = "";
+            passwordTb.Text = "";
         }
     }
 }

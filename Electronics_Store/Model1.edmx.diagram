@@ -4,15 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="44e2ca1ca42b47099869f9581d082847" Name="Diagram1" ZoomLevel="86">
+      <Diagram DiagramId="44e2ca1ca42b47099869f9581d082847" Name="Diagram1" ZoomLevel="112">
         <EntityTypeShape EntityType="МагазинЭлектроникиModel.sysdiagrams" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="МагазинЭлектроникиModel.Пользователь" Width="1.5" PointX="2.875" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="МагазинЭлектроникиModel.Поставка" Width="1.5" PointX="6.125" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="МагазинЭлектроникиModel.Пользователь" Width="1.5" PointX="3.625" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="МагазинЭлектроникиModel.Поставка" Width="1.5" PointX="6.875" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="МагазинЭлектроникиModel.Продажа" Width="1.5" PointX="4.375" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="МагазинЭлектроникиModel.Сотрудник" Width="1.5" PointX="10" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="МагазинЭлектроникиModel.Товар" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
         <AssociationConnector Association="МагазинЭлектроникиModel.FK_Продажа_Пользователь" ManuallyRouted="false" />
-        <AssociationConnector Association="МагазинЭлектроникиModel.FK_Сотрудник_Пользователь" ManuallyRouted="false" />
         <AssociationConnector Association="МагазинЭлектроникиModel.FK_Поставка_Товар" ManuallyRouted="false" />
         <AssociationConnector Association="МагазинЭлектроникиModel.FK_Продажа_Товар" ManuallyRouted="false" />
       </Diagram>

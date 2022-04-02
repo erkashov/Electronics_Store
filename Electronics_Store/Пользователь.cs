@@ -25,9 +25,12 @@ namespace Electronics_Store
         public string password { get; set; }
         public string email { get; set; }
         public string role { get; set; }
+        public string fullname { get; set; }
+        public string name { get; set; }
+        public string papaname { get; set; }
+        public string phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Продажа> Продажа { get; set; }
-        public virtual Сотрудник Сотрудник { get; set; }
     }
 }

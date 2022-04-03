@@ -27,32 +27,31 @@ namespace Electronics_Store
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Пользователь User in МагазинЭлектроникиEntities.GetContext().Пользователь)
+            Пользователь user = МагазинЭлектроникиEntities.GetContext().Пользователь.Where(p => p.login == loginTb.Text && p.password == passwordTb.Text).FirstOrDefault();
+            /*foreach (Пользователь User in МагазинЭлектроникиEntities.GetContext().Пользователь)
+            {*/
+            if (user != null)
             {
-                if (User.login == loginTb.Text && User.password == passwordTb.Text)
+                if (user.role == "Менеджер")
                 {
-                    if (User.role == "Менеджер")
-                    {
-                        ManagerForm Form = new ManagerForm(this);
-                        Form.Visibility = Visibility.Visible;
-                    }
-                    if (User.role == "Администратор")
-                    {
-                        AdminForm Form = new AdminForm(this);
-                        Form.Visibility = Visibility.Visible;
-                    }
-                    if (User.role == "Пользователь")
-                    {
-                        UserForm Form = new UserForm(this,User);
-                        Form.Visibility = Visibility.Visible;
-                    }
-                    this.Visibility = Visibility.Hidden;
-                    loginTb.Text = "";
-                    passwordTb.Text = "";
-                    return;
+                    ManagerForm Form = new ManagerForm(this);
+                    Form.Visibility = Visibility.Visible;
                 }
+                if (user.role == "Администратор")
+                {
+                    AdminForm Form = new AdminForm(this);
+                    Form.Visibility = Visibility.Visible;
+                }
+                if (user.role == "Пользователь")
+                {
+                    UserForm Form = new UserForm(this, user);
+                    Form.Visibility = Visibility.Visible;
+                }
+                this.Visibility = Visibility.Hidden;
+                loginTb.Text = "";
+                passwordTb.Text = "";
             }
-            MessageBox.Show("Логин или пароль введен неверно!");
+            else MessageBox.Show("Логин или пароль введен неверно!");
         }
     }
 }

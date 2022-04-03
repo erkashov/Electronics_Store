@@ -24,6 +24,7 @@ namespace Electronics_Store
         {
             InitializeComponent();
             dataGridt.ItemsSource = МагазинЭлектроникиEntities.GetContext().Товар.ToList();
+            typeTCB.ItemsSource = МагазинЭлектроникиEntities.GetContext().ТипыТоваров.ToList();
             mv = main;
             updateTCB();
             filldatagrid();
@@ -41,19 +42,16 @@ namespace Electronics_Store
                 manufTPTB.Items.Add(товар.manufacture);
             }
         }
-
-        private List<Pos1> pos1s = new List<Pos1>();
-        private List<Pos1> pos2s = new List<Pos1>();
         private void filldatagrid()
         {
-            dataGridPos.ItemsSource = pos2s;
+            /*dataGridPos.ItemsSource = pos2s;
             pos1s.Clear();
             foreach (Поставка поставка in МагазинЭлектроникиEntities.GetContext().Поставка)
             {
                 DateTime dt = (DateTime)поставка.date;
                 pos1s.Add(new Pos1() {id = поставка.id, manufacture = поставка.Товар.manufacture, name = поставка.Товар.name, countTov = поставка.countTov, date = dt.ToShortDateString(), status = поставка.status });
-            }
-            dataGridPos.ItemsSource = pos1s;
+            }*/
+            dataGridPos.ItemsSource = МагазинЭлектроникиEntities.GetContext().Поставка.ToList(); ;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -67,45 +65,31 @@ namespace Electronics_Store
             {
                 if (Int32.TryParse(priceTTB.Text, out int pr) && Int32.TryParse(numberTTB.Text, out int num))
                 {
+                    Товар Tovar = МагазинЭлектроникиEntities.GetContext().Товар.Where(p => p.name == nameTTB.Text && p.manufacture == manufactureTTB.Text).FirstOrDefault();
                     if (IsEditTov)
                     {
-                        for (int j = 0; j < МагазинЭлектроникиEntities.GetContext().Товар.ToList().Count; j++)
-                        {
-                            Товар Tovar = МагазинЭлектроникиEntities.GetContext().Товар.ToList()[j];
-                            if (Tovar.id == CurrentTovar.id)
-                            {
-                                foreach (Товар tov in МагазинЭлектроникиEntities.GetContext().Товар)
-                                {
-                                    if (tov.name == nameTTB.Text && tov.manufacture == manufactureTTB.Text && CurrentTovar.id != tov.id)
-                                    {
-                                        MessageBox.Show("Товар данного производителя уже существует");
-                                        return;
-                                    }
-                                }
-                                Tovar.name = nameTTB.Text;
-                                Tovar.manufacture = manufactureTTB.Text;
-                                Tovar.name = nameTTB.Text;
-                                Tovar.price = pr;
-                                Tovar.type = typeTCB.Text;
-                                Tovar.number = num;
-                                Tovar.warrantyPeriod = warperTTB.Text;
-                                МагазинЭлектроникиEntities.GetContext().SaveChanges();
-                                dataGridt.ItemsSource = МагазинЭлектроникиEntities.GetContext().Товар.ToList();
-                                MessageBox.Show("Данные успешно изменены!");
-                                ResetBut_Click(sender, e);
-                                CurrentTovar = null;
-                                updateTCB();
-                                return;
-                            }
-                        }
+                        Tovar = CurrentTovar;
+                        Tovar.name = nameTTB.Text;
+                        Tovar.manufacture = manufactureTTB.Text;
+                        Tovar.name = nameTTB.Text;
+                        Tovar.price = pr;
+                        Tovar.type = typeTCB.Text;
+                        Tovar.number = num;
+                        Tovar.warrantyPeriod = warperTTB.Text;
+                        МагазинЭлектроникиEntities.GetContext().SaveChanges();
+                        dataGridt.ItemsSource = МагазинЭлектроникиEntities.GetContext().Товар.ToList();
+                        MessageBox.Show("Данные успешно изменены!");
+                        ResetBut_Click(sender, e);
+                        CurrentTovar = null;
+                        updateTCB(); 
+                        IsEditTov = false;
+                        CurrentTovar = null;
+                        return;
                     }
-                    foreach (Товар tov in МагазинЭлектроникиEntities.GetContext().Товар)
+                    if (Tovar != null)
                     {
-                        if (tov.name == nameTTB.Text && tov.manufacture == manufactureTTB.Text)
-                        {
-                            MessageBox.Show("Товар данного производителя уже существует");
-                            return;
-                        }
+                        MessageBox.Show("Товар данного производителя уже существует");
+                        return;
                     }
                     МагазинЭлектроникиEntities.GetContext().Товар.Add(new Товар()
                     {
@@ -160,7 +144,7 @@ namespace Electronics_Store
             manufactureTTB.Text = CurrentTovar.manufacture;
             nameTTB.Text = CurrentTovar.name;
             priceTTB.Text = CurrentTovar.price.ToString();
-            typeTCB.Text = CurrentTovar.type;
+            typeTCB.SelectedItem = CurrentTovar.ТипыТоваров;
             numberTTB.Text = CurrentTovar.number.ToString();
             warperTTB.Text = CurrentTovar.warrantyPeriod;
             IsEditTov = true;
@@ -191,20 +175,19 @@ namespace Electronics_Store
         {
             if (manufTPTB.SelectedItem == null)
                 return;
-            nameTPTB.Text = "";
-            nameTPTB.Items.Clear();
-            foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
+            nameTPTB.ItemsSource = МагазинЭлектроникиEntities.GetContext().Товар.Where(p => p.manufacture == manufTPTB.SelectedItem.ToString()).ToList();
+            /*foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
             {
                 if (manufTPTB.SelectedItem.ToString() == товар.manufacture)
                     nameTPTB.Items.Add(товар.name);
 
-            }
+            }*/
         }
         private bool IsEditPost = false;
         private Поставка currentpost = null;
         private void ResetTP_Click(object sender, RoutedEventArgs e)
         {
-            nameTPTB.Items.Clear();
+            nameTPTB.ItemsSource = null;
             nameTPTB.Text = "";
             manufTPTB.Text = "";
             dateTPTB.SelectedDate = null;
@@ -215,7 +198,9 @@ namespace Electronics_Store
 
         private void BtnEditP_Click(object sender, RoutedEventArgs e)
         {
-            Pos1 pos = (sender as Button).DataContext as Pos1;
+            currentpost = dataGridPos.SelectedItem as Поставка;
+            if (currentpost == null) return;
+            /*Pos1 pos = (sender as Button).DataContext as Pos1;
 
             foreach (Поставка поставка in МагазинЭлектроникиEntities.GetContext().Поставка)
             {
@@ -225,16 +210,18 @@ namespace Electronics_Store
                     break;
                 }
 
-            }
+            }*/
 
             manufTPTB.Text = currentpost.Товар.manufacture;
-            nameTPTB.Items.Clear();
+            nameTPTB.ItemsSource = new List<Товар> { currentpost.Товар };
+            nameTPTB.SelectedItem = currentpost.Товар;
+            /*nameTPTB.Items.Clear();
             foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
             {
                 if (manufTPTB.SelectedItem.ToString() == товар.manufacture)
                     nameTPTB.Items.Add(товар.name);
 
-            }
+            }*/
             nameTPTB.Text = currentpost.Товар.name;
             StatusTPTB.Text = currentpost.status;
             dateTPTB.SelectedDate = currentpost.date;
@@ -244,52 +231,39 @@ namespace Electronics_Store
 
         private void SaveOrCreateTP_Click(object sender, RoutedEventArgs e)
         {
-            if (nameTPTB.Text != "" && manufTPTB.Text != "" && dateTPTB.SelectedDate != null && StatusTPTB.Text != "" && numberTPTB.Text != "")
+            if (nameTPTB.Text != "" && manufTPTB.Text != "" && dateTPTB.SelectedDate != null && StatusTPTB.Text != "" && numberTPTB.Text != "" && nameTPTB.SelectedItem != null)
             {
                 if (Int32.TryParse(numberTPTB.Text, out int num))
                 {
-                    Товар changedTov = null;
-                    foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
-                    {
-                        if (manufTPTB.Text == товар.manufacture && nameTPTB.Text == товар.name)
-                        {
-                            changedTov = товар;
-                            break;
-                        }
-                    }
+                    Товар changedTov = nameTPTB.SelectedItem as Товар;
                     if (IsEditPost)
                     {
-                        for (int j = 0; j < МагазинЭлектроникиEntities.GetContext().Поставка.ToList().Count; j++)
+                        Поставка поставка = МагазинЭлектроникиEntities.GetContext().Поставка.Where(p => p.id == currentpost.id).FirstOrDefault();
+                        if (поставка == null) return;
+                        if (поставка.status == "Получена")
                         {
-                            Поставка поставка = МагазинЭлектроникиEntities.GetContext().Поставка.ToList()[j];
-                            if (поставка.id == currentpost.id)
+                            MessageBox.Show("Поставка отмечена как полученая ее дальнейшее изменение невозможно!!!");
+                            return;
+                        }
+                        поставка.countTov = num;
+                        поставка.date = dateTPTB.SelectedDate;
+                        поставка.idTov = changedTov.id;
+                        поставка.Товар = changedTov;
+                        поставка.status = StatusTPTB.Text;
+                        if (StatusTPTB.Text == "Получена")
+                        {
+                            if (MessageBox.Show($"Вы точно хотите изменить статус товара {currentpost.Товар.name} производителя {currentpost.Товар.manufacture}, датйо прибытия {((DateTime)currentpost.date).ToShortDateString()} на статус прибыла?(Изменить поставку более будет невозможно)", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                             {
-                                if(поставка.status == "Получена")
-                                {
-                                    MessageBox.Show("Поставка отмечена как полученая ее дальнейшее изменение невозможно!!!");
-                                    return;
-                                }
-                                поставка.countTov = num;
-                                поставка.date = dateTPTB.SelectedDate;
-                                поставка.idTov = changedTov.id;
-                                поставка.Товар = changedTov;
-                                поставка.status = StatusTPTB.Text;
-                                if (StatusTPTB.Text == "Получена")
-                                {
-                                    if (MessageBox.Show($"Вы точно хотите изменить статус товара {currentpost.Товар.name} производителя {currentpost.Товар.manufacture}, датйо прибытия {((DateTime)currentpost.date).ToShortDateString()} на статус прибыла?(Изменить поставку более будет невозможно)", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                                    {
-                                        currentpost.Товар.number += currentpost.countTov;
-                                    }
-                                }
-                                МагазинЭлектроникиEntities.GetContext().SaveChanges();
-                                dataGridt.ItemsSource = МагазинЭлектроникиEntities.GetContext().Товар.ToList();
-                                filldatagrid();
-                                MessageBox.Show("Данные успешно изменены!");
-                                ResetTP_Click(sender, e);
-                                CurrentTovar = null;
-                                return;
+                                currentpost.Товар.number += currentpost.countTov;
                             }
                         }
+                        МагазинЭлектроникиEntities.GetContext().SaveChanges();
+                        dataGridt.ItemsSource = МагазинЭлектроникиEntities.GetContext().Товар.ToList();
+                        filldatagrid();
+                        MessageBox.Show("Данные успешно изменены!");
+                        ResetTP_Click(sender, e);
+                        CurrentTovar = null;
+                        return;
                     }
 
                     МагазинЭлектроникиEntities.GetContext().Поставка.Add(new Поставка()
@@ -324,16 +298,8 @@ namespace Electronics_Store
 
         private void BtnDelP_Click(object sender, RoutedEventArgs e)
         {
-            Pos1 pos = (sender as Button).DataContext as Pos1;
-
-            foreach (Поставка поставка in МагазинЭлектроникиEntities.GetContext().Поставка)
-            {
-                if (pos.id == поставка.id)
-                {
-                    currentpost = поставка;
-                    break;
-                }
-            }
+            currentpost = dataGridPos.SelectedItem as Поставка;
+            if (currentpost == null) return;
             if (MessageBox.Show($"Вы точно хотите удалить {currentpost.Товар.name} производителя {currentpost.Товар.manufacture} статуса {currentpost.status}", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 МагазинЭлектроникиEntities.GetContext().Поставка.Remove(currentpost);
@@ -342,15 +308,5 @@ namespace Electronics_Store
                 MessageBox.Show("Поставка успешно удалена!");
             }
         }
-    }
-
-    class Pos1
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string manufacture { get; set; }
-        public string date { get; set; }
-        public string status { get; set; }
-        public int countTov { get; set; }
     }
 }

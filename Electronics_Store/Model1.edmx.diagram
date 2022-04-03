@@ -6,13 +6,16 @@
     <edmx:Diagrams>
       <Diagram DiagramId="44e2ca1ca42b47099869f9581d082847" Name="Diagram1" ZoomLevel="112">
         <EntityTypeShape EntityType="МагазинЭлектроникиModel.sysdiagrams" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="МагазинЭлектроникиModel.Пользователь" Width="1.5" PointX="3.625" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="МагазинЭлектроникиModel.Пользователь" Width="1.5" PointX="4.625" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="МагазинЭлектроникиModel.Поставка" Width="1.5" PointX="6.875" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="МагазинЭлектроникиModel.Продажа" Width="1.5" PointX="4.375" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="МагазинЭлектроникиModel.Товар" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
-        <AssociationConnector Association="МагазинЭлектроникиModel.FK_Продажа_Пользователь" ManuallyRouted="false" />
         <AssociationConnector Association="МагазинЭлектроникиModel.FK_Поставка_Товар" ManuallyRouted="false" />
-        <AssociationConnector Association="МагазинЭлектроникиModel.FK_Продажа_Товар" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="МагазинЭлектроникиModel.ТипыТоваров" Width="1.5" PointX="0.75" PointY="1.25" />
+        <AssociationConnector Association="МагазинЭлектроникиModel.FK_Товар_ТипыТоваров" />
+        <EntityTypeShape EntityType="МагазинЭлектроникиModel.Продажа" Width="1.5" PointX="6.875" PointY="7.875" />
+        <AssociationConnector Association="МагазинЭлектроникиModel.FK_Продажа_Пользователь" />
+        <AssociationConnector Association="МагазинЭлектроникиModel.FK_Продажа_Товар" />
+        <AssociationConnector Association="МагазинЭлектроникиModel.FK_Продажа_Товар1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

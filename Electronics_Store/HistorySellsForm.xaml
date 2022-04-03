@@ -13,12 +13,12 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="id" Width="0.2*" Binding="{Binding id}"></DataGridTextColumn>
                 <DataGridTextColumn Header="ФИО сотрудника" Width="1.5*" Binding="{Binding FIO}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Наименование" Width="*" Binding="{Binding name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Производитель" Width="*" Binding="{Binding manufacture}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Стоимость" Width="0.45*" Binding="{Binding price}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Категория" Width="1.2*" Binding="{Binding type}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Количество" Width="0.5*" Binding="{Binding countTov}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Дата" Width="0.5*" Binding="{Binding DATA}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Наименование" Width="*" Binding="{Binding Товар.name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Производитель" Width="*" Binding="{Binding Товар.manufacture}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Стоимость" Width="0.45*" Binding="{Binding Товар.price}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Категория" Width="1.2*" Binding="{Binding Товар.type}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Количество" Width="0.5*" Binding="{Binding countProd}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Дата" Width="0.5*" Binding="{Binding date, StringFormat=\{0:dd.MM.yy\}}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

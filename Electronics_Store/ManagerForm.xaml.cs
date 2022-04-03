@@ -22,6 +22,7 @@ namespace Electronics_Store
         public ManagerForm(MainWindow mainWindow)
         {
             InitializeComponent();
+            //МОЛОДЕЦ
             dataGrid.ItemsSource = МагазинЭлектроникиEntities.GetContext().Пользователь.ToList();
             mw = mainWindow;
         }

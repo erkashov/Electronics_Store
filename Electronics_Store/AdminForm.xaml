@@ -47,40 +47,7 @@
                         <Label Content="Наименование" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
                         <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="nameTTB"></TextBox>
                         <Label Content="Тип" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
-                        <ComboBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="typeTCB">
-                            <ComboBoxItem>
-                                <TextBlock Text="Компьютеры и ноутбуки"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Комплектующие для пк"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Переферия и аксессуары"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Смартфоны и гаджеты"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Планшеты"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Фототехника"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Телевизоры и аксессуары"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Консоли и видиоигры"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Смартфоны и гаджеты"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Аудиотехника"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Бытовая техника"></TextBlock>
-                            </ComboBoxItem>
+                        <ComboBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="typeTCB" DisplayMemberPath="name">
                         </ComboBox>
                         <Label Content="Производитель" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
                         <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="manufactureTTB"></TextBox>
@@ -110,12 +77,12 @@
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="7*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid Grid.Column="1" ItemsSource="{Binding pos1s}" x:Name="dataGridPos" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid Grid.Column="1" x:Name="dataGridPos" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id" Width="0.5*" Binding="{Binding id}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Наименование" Width="*" Binding="{Binding name}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Производитель" Width="1.2*" Binding="{Binding manufacture}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Ожидаемая дата" Width="*" Binding="{Binding date}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Наименование" Width="*" Binding="{Binding Товар.name}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Производитель" Width="1.2*" Binding="{Binding Товар.manufacture}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Ожидаемая дата" Width="*" Binding="{Binding date, StringFormat=\{0:dd.MM.yy\}}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Статус" Width="*" Binding="{Binding status}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Количество" Width="*" Binding="{Binding countTov}"></DataGridTextColumn>
 
@@ -137,7 +104,7 @@
                     </DataGrid>
                     <StackPanel>
                         <Label Content="Наименование" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
-                        <ComboBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="nameTPTB">
+                        <ComboBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="nameTPTB" DisplayMemberPath="name">
                         </ComboBox>
                         <Label Content="Производитель" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
                         <ComboBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="manufTPTB" SelectionChanged="manufTPTB_SelectionChanged">

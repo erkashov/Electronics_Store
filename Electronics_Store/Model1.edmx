@@ -47,6 +47,7 @@
           <Property Name="idUser" Type="int" Nullable="false" />
           <Property Name="idTovar" Type="int" Nullable="false" />
           <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="countProd" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Товар">
           <Key>
@@ -196,6 +197,7 @@
           <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Пользователь" Relationship="Self.FK_Продажа_Пользователь" FromRole="Продажа" ToRole="Пользователь" />
           <NavigationProperty Name="Товар" Relationship="Self.FK_Продажа_Товар" FromRole="Продажа" ToRole="Товар" />
+          <Property Name="countProd" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Товар">
           <Key>
@@ -353,6 +355,7 @@
           <EntitySetMapping Name="Продажа">
             <EntityTypeMapping TypeName="МагазинЭлектроникиModel.Продажа">
               <MappingFragment StoreEntitySet="Продажа">
+                <ScalarProperty Name="countProd" ColumnName="countProd" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="idUser" ColumnName="idUser" />
                 <ScalarProperty Name="idTovar" ColumnName="idTovar" />

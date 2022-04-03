@@ -20,7 +20,7 @@
                     </Grid.ColumnDefinitions>
                     <DataGrid Grid.Column="1"   x:Name="dataGridt" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id" Width="0.5*" Binding="{Binding id}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="0.5*" Binding="{Binding id}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Наименование" Width="1.5*" Binding="{Binding name}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Тип" Width="2.1*" Binding="{Binding type}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Производитель" Width="1.3*" Binding="{Binding manufacture}"></DataGridTextColumn>

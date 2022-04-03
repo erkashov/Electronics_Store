@@ -64,6 +64,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddOrEditSellForm.xaml.cs">
+      <DependentUpon>AddOrEditSellForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HistorySellsForm.xaml.cs">
+      <DependentUpon>HistorySellsForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManagerForm.xaml.cs">
       <DependentUpon>ManagerForm.xaml</DependentUpon>
     </Compile>
@@ -106,7 +112,15 @@
     <Compile Include="Товар.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Page Include="AddOrEditSellForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdminForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HistorySellsForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

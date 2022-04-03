@@ -158,5 +158,11 @@ namespace Electronics_Store
         {
             mw.Visibility = Visibility.Visible;
         }
+
+        private void HistorySellsBut_Click(object sender, RoutedEventArgs e)
+        {
+            HistorySellsForm historySellsForm = new HistorySellsForm();
+            historySellsForm.ShowDialog();
+        }
     }
 }

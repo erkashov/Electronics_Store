@@ -1,0 +1,40 @@
+﻿<Window x:Class="Electronics_Store.AddOrEditSellForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Electronics_Store"
+        mc:Ignorable="d"
+        Title="AddOrEditSellForm" Height="413.782" Width="410.664"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        >
+    <Grid>
+        <StackPanel>
+            <Label Content="Добавление товара" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Margin="10" FontFamily="Comic Sans MS" Name="ItogStoimLabel"></Label>
+            <Label Content="Категория товара" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
+            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="TypeTovCB" SelectionChanged="TypeTovCB_SelectionChanged"></ComboBox>
+            <Label Content="Наименование товара" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
+            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="NameTovCB" SelectionChanged="NameTovCB_SelectionChanged"></ComboBox>
+            <Label Content="Производитель" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
+            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="ManufTovCB" SelectionChanged="ManufTovCB_SelectionChanged"></ComboBox>
+            <Label Content="Количество товаров (остаток на складе: )" FontFamily="Comic Sans MS" Margin="10 0 10 0" Name="CountAtStorageLab"></Label>
+            <TextBox FontFamily="Comic Sans MS" IsEnabled="False" Margin="10 0 10 10" Name="CountTovTB" TextChanged="CountTovTB_TextChanged"></TextBox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Label Content="Цена за шт:" FontSize="12" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
+                    <TextBlock FontSize="12" FontFamily="Comic Sans MS" Margin="10 0 10 0" Background="#FFECECEC" Name="PriceForOneTB"></TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <Label Content="Цена за все:" FontSize="12" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
+                    <TextBlock FontSize="12" FontFamily="Comic Sans MS" Margin="10 0 10 0" Background="#FFECECEC" Name="PriceForSeveralTB"></TextBlock>
+                </StackPanel>
+            </Grid>
+            <Button IsEnabled="False" Content="Сохранить" Click="SaveBut_Click" FontSize="12" FontFamily="Comic Sans MS" Margin="10 10 10 0" Height="30" Background="#FFCCFAFF" Name="SaveBut" FontWeight="Bold"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

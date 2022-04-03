@@ -18,6 +18,7 @@ namespace Electronics_Store
         public int idUser { get; set; }
         public int idTovar { get; set; }
         public System.DateTime date { get; set; }
+        public int countProd { get; set; }
     
         public virtual Пользователь Пользователь { get; set; }
         public virtual Товар Товар { get; set; }

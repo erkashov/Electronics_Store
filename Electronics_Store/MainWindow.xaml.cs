@@ -25,19 +25,6 @@ namespace Electronics_Store
             InitializeComponent();
         }
 
-        /*
-        private static МагазинЭлектроникиEntities _context;
-
-        public static МагазинЭлектроникиEntities GetContext()
-        {
-            if(_context == null)
-            {
-                _context = new МагазинЭлектроникиEntities();
-            }
-            return _context;
-        }
-         */
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             foreach (Пользователь User in МагазинЭлектроникиEntities.GetContext().Пользователь)
@@ -56,7 +43,7 @@ namespace Electronics_Store
                     }
                     if (User.role == "Пользователь")
                     {
-                        UserForm Form = new UserForm(this);
+                        UserForm Form = new UserForm(this,User);
                         Form.Visibility = Visibility.Visible;
                     }
                     this.Visibility = Visibility.Hidden;

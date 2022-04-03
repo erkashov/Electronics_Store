@@ -5,8 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Electronics_Store"
         mc:Ignorable="d"
-        Title="UserForm" Height="450" Width="800" Closing="Window_Closing">
+        Title="UserForm" Height="458.149" Width="864.286" Closing="Window_Closing"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="Корзина" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS"></Label>
+        <DataGrid Grid.Row="1" x:Name="DG" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header=" " Width="0.2*" Binding="{Binding id}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Наименование" Width="*" Binding="{Binding name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Производитель" Width="*" Binding="{Binding manufacture}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Стоимость" Width="0.45*" Binding="{Binding price}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Категория" Width="1.2*" Binding="{Binding type}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Количество" Width="0.5*" Binding="{Binding countTov}"></DataGridTextColumn>
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать" Name="BtnEditP" Click="BtnEditP_Click" Background="#FFFFF6CC"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Удалить" Name="BtnDelP" Click="BtnDelP_Click"  Background="#FFFFCCCC" ></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Grid.Row="0" HorizontalAlignment="Right" Content="Итоговая стоимость: 0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" FontWeight="Bold" Margin="0 0 10 0" FontFamily="Comic Sans MS" Name="ItogStoimLabel"></Label>
+        <Button Grid.Row="2" Height="30" Margin="10" Width="170" HorizontalAlignment="Left" Background="#FFFFFF64" Content="Добавить товар в корзину" FontWeight="Bold" FontFamily="Comic Sans MS" Name="AddTovBut" Click="AddTovBut_Click"></Button>
+        <Button Grid.Row="2" Height="30" Margin="10" Width="170" HorizontalAlignment="Center" Background="#FF64FF64" Content= "Подтвердить продажу" FontWeight="Bold" FontFamily="Comic Sans MS" Name="AcceptTovBut" Click="AcceptTovBut_Click"></Button>
+        <Button Grid.Row="2" Height="30" Margin="10" Width="170" HorizontalAlignment="Right" Background="#FFFF6464" Content="История продаж" FontWeight="Bold" FontFamily="Comic Sans MS" Name="HistorySellsBut" Click="HistorySellsBut_Click"></Button>
     </Grid>
 </Window>

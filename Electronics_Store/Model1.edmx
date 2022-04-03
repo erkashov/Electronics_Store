@@ -49,6 +49,12 @@
           <Property Name="date" Type="date" Nullable="false" />
           <Property Name="countProd" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="ТипыТоваров">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Товар">
           <Key>
             <PropertyRef Name="id" />
@@ -56,7 +62,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="manufacture" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="price" Type="int" Nullable="false" />
           <Property Name="warrantyPeriod" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="number" Type="int" Nullable="false" />
@@ -85,7 +91,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Продажа_Товар">
+        <Association Name="FK_Продажа_Товар1">
           <End Role="Товар" Type="Self.Товар" Multiplicity="1" />
           <End Role="Продажа" Type="Self.Продажа" Multiplicity="*" />
           <ReferentialConstraint>
@@ -93,7 +99,19 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Продажа">
-              <PropertyRef Name="idUser" />
+              <PropertyRef Name="idTovar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Товар_ТипыТоваров">
+          <End Role="ТипыТоваров" Type="Self.ТипыТоваров" Multiplicity="1" />
+          <End Role="Товар" Type="Self.Товар" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ТипыТоваров">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="Товар">
+              <PropertyRef Name="type" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -133,6 +151,7 @@
           <EntitySet Name="Пользователь" EntityType="Self.Пользователь" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Поставка" EntityType="Self.Поставка" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Продажа" EntityType="Self.Продажа" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ТипыТоваров" EntityType="Self.ТипыТоваров" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Товар" EntityType="Self.Товар" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Поставка_Товар" Association="Self.FK_Поставка_Товар">
             <End Role="Товар" EntitySet="Товар" />
@@ -142,9 +161,13 @@
             <End Role="Пользователь" EntitySet="Пользователь" />
             <End Role="Продажа" EntitySet="Продажа" />
           </AssociationSet>
-          <AssociationSet Name="FK_Продажа_Товар" Association="Self.FK_Продажа_Товар">
+          <AssociationSet Name="FK_Продажа_Товар1" Association="Self.FK_Продажа_Товар1">
             <End Role="Товар" EntitySet="Товар" />
             <End Role="Продажа" EntitySet="Продажа" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Товар_ТипыТоваров" Association="Self.FK_Товар_ТипыТоваров">
+            <End Role="ТипыТоваров" EntitySet="ТипыТоваров" />
+            <End Role="Товар" EntitySet="Товар" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -170,11 +193,11 @@
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Продажа" Relationship="Self.FK_Продажа_Пользователь" FromRole="Пользователь" ToRole="Продажа" />
           <Property Name="fullname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="papaname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Продажа" Relationship="МагазинЭлектроникиModel.FK_Продажа_Пользователь" FromRole="Пользователь" ToRole="Продажа" />
         </EntityType>
         <EntityType Name="Поставка">
           <Key>
@@ -187,18 +210,6 @@
           <NavigationProperty Name="Товар" Relationship="Self.FK_Поставка_Товар" FromRole="Поставка" ToRole="Товар" />
           <Property Name="countTov" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="Продажа">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idUser" Type="Int32" Nullable="false" />
-          <Property Name="idTovar" Type="Int32" Nullable="false" />
-          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Пользователь" Relationship="Self.FK_Продажа_Пользователь" FromRole="Продажа" ToRole="Пользователь" />
-          <NavigationProperty Name="Товар" Relationship="Self.FK_Продажа_Товар" FromRole="Продажа" ToRole="Товар" />
-          <Property Name="countProd" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="Товар">
           <Key>
             <PropertyRef Name="id" />
@@ -206,25 +217,15 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="manufacture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="price" Type="Int32" Nullable="false" />
           <Property Name="warrantyPeriod" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="number" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Поставка" Relationship="Self.FK_Поставка_Товар" FromRole="Товар" ToRole="Поставка" />
-          <NavigationProperty Name="Продажа" Relationship="Self.FK_Продажа_Товар" FromRole="Товар" ToRole="Продажа" />
+          <NavigationProperty Name="ТипыТоваров" Relationship="МагазинЭлектроникиModel.FK_Товар_ТипыТоваров" FromRole="Товар" ToRole="ТипыТоваров" />
+          <NavigationProperty Name="Продажа" Relationship="МагазинЭлектроникиModel.FK_Продажа_Товар" FromRole="Товар" ToRole="Продажа" />
+          <NavigationProperty Name="Продажа1" Relationship="МагазинЭлектроникиModel.FK_Продажа_Товар1" FromRole="Товар" ToRole="Продажа" />
         </EntityType>
-        <Association Name="FK_Продажа_Пользователь">
-          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="1" />
-          <End Role="Продажа" Type="Self.Продажа" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Пользователь">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Продажа">
-              <PropertyRef Name="idUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Поставка_Товар">
           <End Role="Товар" Type="Self.Товар" Multiplicity="1" />
           <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
@@ -237,35 +238,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Продажа_Товар">
-          <End Role="Товар" Type="Self.Товар" Multiplicity="1" />
-          <End Role="Продажа" Type="Self.Продажа" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Товар">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Продажа">
-              <PropertyRef Name="idUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="МагазинЭлектроникиEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Пользователь" EntityType="Self.Пользователь" />
           <EntitySet Name="Поставка" EntityType="Self.Поставка" />
-          <EntitySet Name="Продажа" EntityType="Self.Продажа" />
           <EntitySet Name="Товар" EntityType="Self.Товар" />
-          <AssociationSet Name="FK_Продажа_Пользователь" Association="Self.FK_Продажа_Пользователь">
-            <End Role="Пользователь" EntitySet="Пользователь" />
-            <End Role="Продажа" EntitySet="Продажа" />
-          </AssociationSet>
           <AssociationSet Name="FK_Поставка_Товар" Association="Self.FK_Поставка_Товар">
             <End Role="Товар" EntitySet="Товар" />
             <End Role="Поставка" EntitySet="Поставка" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Продажа_Товар" Association="Self.FK_Продажа_Товар">
-            <End Role="Товар" EntitySet="Товар" />
-            <End Role="Продажа" EntitySet="Продажа" />
           </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -297,6 +277,24 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="ТипыТоваров" EntityType="МагазинЭлектроникиModel.ТипыТоваров" />
+          <AssociationSet Name="FK_Товар_ТипыТоваров" Association="МагазинЭлектроникиModel.FK_Товар_ТипыТоваров">
+            <End Role="ТипыТоваров" EntitySet="ТипыТоваров" />
+            <End Role="Товар" EntitySet="Товар" />
+          </AssociationSet>
+          <EntitySet Name="Продажа" EntityType="МагазинЭлектроникиModel.Продажа" />
+          <AssociationSet Name="FK_Продажа_Пользователь" Association="МагазинЭлектроникиModel.FK_Продажа_Пользователь">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Продажа" EntitySet="Продажа" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Продажа_Товар" Association="МагазинЭлектроникиModel.FK_Продажа_Товар">
+            <End Role="Товар" EntitySet="Товар" />
+            <End Role="Продажа" EntitySet="Продажа" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Продажа_Товар1" Association="МагазинЭлектроникиModel.FK_Продажа_Товар1">
+            <End Role="Товар" EntitySet="Товар" />
+            <End Role="Продажа" EntitySet="Продажа" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -309,6 +307,73 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="ТипыТоваров">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Товар" Relationship="МагазинЭлектроникиModel.FK_Товар_ТипыТоваров" FromRole="ТипыТоваров" ToRole="Товар" />
+        </EntityType>
+        <Association Name="FK_Товар_ТипыТоваров">
+          <End Type="МагазинЭлектроникиModel.ТипыТоваров" Role="ТипыТоваров" Multiplicity="1" />
+          <End Type="МагазинЭлектроникиModel.Товар" Role="Товар" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ТипыТоваров">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="Товар">
+              <PropertyRef Name="type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Продажа">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUser" Type="Int32" Nullable="false" />
+          <Property Name="idTovar" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="countProd" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Пользователь" Relationship="МагазинЭлектроникиModel.FK_Продажа_Пользователь" FromRole="Продажа" ToRole="Пользователь" />
+          <NavigationProperty Name="Товар" Relationship="МагазинЭлектроникиModel.FK_Продажа_Товар1" FromRole="Продажа" ToRole="Товар" />
+        </EntityType>
+        <Association Name="FK_Продажа_Пользователь">
+          <End Type="МагазинЭлектроникиModel.Пользователь" Role="Пользователь" Multiplicity="1" />
+          <End Type="МагазинЭлектроникиModel.Продажа" Role="Продажа" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Продажа">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Продажа_Товар">
+          <End Type="МагазинЭлектроникиModel.Товар" Role="Товар" Multiplicity="1" />
+          <End Type="МагазинЭлектроникиModel.Продажа" Role="Продажа" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Товар">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Продажа">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Продажа_Товар1">
+          <End Type="МагазинЭлектроникиModel.Товар" Role="Товар" Multiplicity="1" />
+          <End Type="МагазинЭлектроникиModel.Продажа" Role="Продажа" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Товар">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Продажа">
+              <PropertyRef Name="idTovar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -352,17 +417,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Продажа">
-            <EntityTypeMapping TypeName="МагазинЭлектроникиModel.Продажа">
-              <MappingFragment StoreEntitySet="Продажа">
-                <ScalarProperty Name="countProd" ColumnName="countProd" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idUser" ColumnName="idUser" />
-                <ScalarProperty Name="idTovar" ColumnName="idTovar" />
-                <ScalarProperty Name="date" ColumnName="date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Товар">
             <EntityTypeMapping TypeName="МагазинЭлектроникиModel.Товар">
               <MappingFragment StoreEntitySet="Товар">
@@ -400,6 +454,24 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище МагазинЭлектроникиModel.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище МагазинЭлектроникиModel.sp_upgraddiagrams" />
+          <EntitySetMapping Name="ТипыТоваров">
+            <EntityTypeMapping TypeName="МагазинЭлектроникиModel.ТипыТоваров">
+              <MappingFragment StoreEntitySet="ТипыТоваров">
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Продажа">
+            <EntityTypeMapping TypeName="МагазинЭлектроникиModel.Продажа">
+              <MappingFragment StoreEntitySet="Продажа">
+                <ScalarProperty Name="countProd" ColumnName="countProd" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="idTovar" ColumnName="idTovar" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

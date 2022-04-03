@@ -17,15 +17,6 @@ namespace Electronics_Store
     
     public partial class МагазинЭлектроникиEntities : DbContext
     {
-        private static МагазинЭлектроникиEntities _context;
-        public static МагазинЭлектроникиEntities GetContext()
-        {
-            if (_context == null)
-            {
-                _context = new МагазинЭлектроникиEntities();
-            }
-            return _context;
-        }
         public МагазинЭлектроникиEntities()
             : base("name=МагазинЭлектроникиEntities")
         {
@@ -39,8 +30,9 @@ namespace Electronics_Store
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Пользователь> Пользователь { get; set; }
         public virtual DbSet<Поставка> Поставка { get; set; }
-        public virtual DbSet<Продажа> Продажа { get; set; }
         public virtual DbSet<Товар> Товар { get; set; }
+        public virtual DbSet<ТипыТоваров> ТипыТоваров { get; set; }
+        public virtual DbSet<Продажа> Продажа { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

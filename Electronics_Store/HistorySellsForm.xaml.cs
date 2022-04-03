@@ -22,13 +22,15 @@ namespace Electronics_Store
         public HistorySellsForm()
         {
             InitializeComponent();
-            foreach(Продажа продажа in МагазинЭлектроникиEntities.GetContext().Продажа)
+            var list = МагазинЭлектроникиEntities.GetContext().Продажа.ToList();
+            DG.ItemsSource = list;
+            /*foreach(Продажа продажа in )
             {
                 DateTime dt = (DateTime)продажа.date;
                 DG.Items.Add(new
                 {
                     id = продажа.id,
-                    FIO = продажа.Пользователь.fullname + продажа.Пользователь.name + продажа.Пользователь.papaname,
+                    //FIO = продажа.Пользователь.fullname + продажа.Пользователь.name + продажа.Пользователь.papaname,
                     name = МагазинЭлектроникиEntities.GetContext().Товар.Find(продажа.idTovar).name,
                     manufacture = МагазинЭлектроникиEntities.GetContext().Товар.Find(продажа.idTovar).manufacture,
                     price = МагазинЭлектроникиEntities.GetContext().Товар.Find(продажа.idTovar).price,
@@ -36,7 +38,7 @@ namespace Electronics_Store
                     countTov = продажа.countProd,
                     DATA = dt.ToShortDateString()
                 });
-            }
+            }*/
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

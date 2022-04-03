@@ -24,13 +24,14 @@ namespace Electronics_Store
         {
             userForm = UF;
             InitializeComponent();
-            foreach(Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
+            TypeTovCB.ItemsSource = МагазинЭлектроникиEntities.GetContext().ТипыТоваров.ToList();
+            /*foreach(Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
             {
                 if (!TypeTovCB.Items.Contains(товар.type))
                 {
                     TypeTovCB.Items.Add(товар.type);
                 }
-            }
+            }*/
         }
 
         private Продажа curprod;
@@ -43,13 +44,14 @@ namespace Electronics_Store
             curprod = продажа;
             SaveBut.IsEnabled = true;
             ItogStoimLabel.Content = "Изменение товара";
-            foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
+            TypeTovCB.ItemsSource = МагазинЭлектроникиEntities.GetContext().ТипыТоваров.ToList();
+            /*foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
             {
                 if (!TypeTovCB.Items.Contains(товар.type))
                 {
                     TypeTovCB.Items.Add(товар.type);
                 }
-            }
+            }*/
             TypeTovCB.Text = продажа.Товар.type;
             NameTovCB.Text = продажа.Товар.name;
             ManufTovCB.Text = продажа.Товар.manufacture;
@@ -58,15 +60,18 @@ namespace Electronics_Store
 
         private void TypeTovCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            NameTovCB.Items.Clear();
+            //NameTovCB.Items.Clear();
             PriceForOneTB.Text = "";
             PriceForSeveralTB.Text = "";
-            ManufTovCB.Items.Clear();
+            //ManufTovCB.Items.Clear();
             CountTovTB.Text = "";
             CountAtStorageLab.Content = "Количество товаров (остаток на складе: )";
             CountTovTB.IsEnabled = false;
             SaveBut.IsEnabled = false;
-            foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
+            if (TypeTovCB.SelectedItem == null)
+                return;
+            NameTovCB.ItemsSource = (TypeTovCB.SelectedItem as ТипыТоваров).Товар.ToList();
+            /*foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
             {
                 if (TypeTovCB.SelectedItem == null)
                     return;
@@ -74,27 +79,41 @@ namespace Electronics_Store
                 {
                     NameTovCB.Items.Add(товар.name);
                 }
-            }
+            }*/
         }
 
         private void NameTovCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         { 
             PriceForOneTB.Text = "";
             PriceForSeveralTB.Text = "";
-            ManufTovCB.Items.Clear();
+            //ManufTovCB.Items.Clear();
             CountTovTB.Text = "";
             CountAtStorageLab.Content = "Количество товаров (остаток на складе: )";
             CountTovTB.IsEnabled = false;
             SaveBut.IsEnabled = false;
-            foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
+            if (NameTovCB.SelectedItem == null)
+                return;
+            string name = (NameTovCB.SelectedItem as Товар).name;
+            ManufTovCB.ItemsSource = МагазинЭлектроникиEntities.GetContext().Товар.Where(p => p.name == name).ToList();
+            PriceForOneTB.Text = "";
+            PriceForSeveralTB.Text = "";
+            CountTovTB.Text = "";
+            CountTovTB.IsEnabled = true;
+            SaveBut.IsEnabled = false;
+            CurrentTov = NameTovCB.SelectedItem as Товар;
+            if (CurrentTov == null) return;
+            if (!editmode)
             {
-                if (NameTovCB.SelectedItem == null)
-                    return;
-                if (NameTovCB.SelectedItem.ToString() == товар.name && !ManufTovCB.Items.Contains(товар.manufacture))
+                foreach (Продажа продажа in userForm.SellsList)
                 {
-                    ManufTovCB.Items.Add(товар.manufacture);
+                    if (продажа.Товар == CurrentTov)
+                    {
+                        negr += продажа.countProd;
+                    }
                 }
             }
+            CountAtStorageLab.Content = $"Количество товаров (остаток на складе: {CurrentTov.number - negr})";
+            PriceForOneTB.Text = CurrentTov.price.ToString();
         }
         private Товар CurrentTov = null;
         private void ManufTovCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -104,7 +123,7 @@ namespace Electronics_Store
             CountTovTB.Text = "";
             CountTovTB.IsEnabled = true;
             SaveBut.IsEnabled = false;
-            foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
+            /*foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
             {
                 if (TypeTovCB.SelectedItem == null || NameTovCB.SelectedItem == null || ManufTovCB.SelectedItem == null)
                     return;
@@ -125,7 +144,7 @@ namespace Electronics_Store
                     PriceForOneTB.Text = товар.price.ToString();
                     return;
                 }
-            }
+            }*/
         }
         private int negr;
         private void CountTovTB_TextChanged(object sender, TextChangedEventArgs e)
@@ -188,6 +207,11 @@ namespace Electronics_Store
             userForm.SellsList.Add(new Продажа() { countProd = Int32.Parse(CountTovTB.Text), date = DateTime.Now, Товар = CurrentTov, idTovar = CurrentTov.id, idUser = userForm.CurrentUser.id, Пользователь = userForm.CurrentUser });
             userForm.filldatagrid();
             this.Close();
+        }
+
+        private void ManufTovCB_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            if(ManufTovCB != null) NameTovCB.SelectedItem = ManufTovCB.SelectedItem;
         }
     }
 }

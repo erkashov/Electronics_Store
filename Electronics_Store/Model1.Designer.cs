@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "C:\Users\Школьник 337\source\repos\Electronics_Store\Electronics_Store\Model1.edmx" включено. 
+﻿// Создание кода T4 для модели "C:\Users\emir2\Source\Repos\Electronics_Store\Electronics_Store\Model1.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

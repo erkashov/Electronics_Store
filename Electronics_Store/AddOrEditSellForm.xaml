@@ -10,14 +10,14 @@
         ResizeMode="NoResize"
         >
     <Grid>
-        <StackPanel Margin="0,0,-8,-8">
+        <StackPanel>
             <Label Content="Добавление товара" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Margin="10" FontFamily="Comic Sans MS" Name="ItogStoimLabel"></Label>
             <Label Content="Категория товара" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
-            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="TypeTovCB" SelectionChanged="TypeTovCB_SelectionChanged" DisplayMemberPath="name"></ComboBox>
+            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="TypeTovCB" SelectionChanged="TypeTovCB_SelectionChanged"></ComboBox>
             <Label Content="Наименование товара" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
-            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="NameTovCB" SelectionChanged="NameTovCB_SelectionChanged" DisplayMemberPath="name"></ComboBox>
+            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="NameTovCB" SelectionChanged="NameTovCB_SelectionChanged"></ComboBox>
             <Label Content="Производитель" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
-            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="ManufTovCB" DisplayMemberPath="manufacture" SelectionChanged="ManufTovCB_SelectionChanged_1"></ComboBox>
+            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="ManufTovCB" SelectionChanged="ManufTovCB_SelectionChanged"></ComboBox>
             <Label Content="Количество товаров (остаток на складе: )" FontFamily="Comic Sans MS" Margin="10 0 10 0" Name="CountAtStorageLab"></Label>
             <TextBox FontFamily="Comic Sans MS" IsEnabled="False" Margin="10 0 10 10" Name="CountTovTB" TextChanged="CountTovTB_TextChanged"></TextBox>
             <Grid>

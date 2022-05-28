@@ -207,7 +207,7 @@
             <PropertyRef Name="name" />
           </Key>
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Tovars" Relationship="Self.FK_Tovar_Category" FromRole="Category" ToRole="Tovar" />
+          <NavigationProperty Name="Tovars" Relationship="BooksShopModel.FK_Tovar_Category" FromRole="Category" ToRole="Tovar" />
         </EntityType>
         <EntityType Name="Delivery">
           <Key>
@@ -240,19 +240,6 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="Tovar">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="author" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="price" Type="Int32" Nullable="false" />
-          <Property Name="number" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TovarDels" Relationship="Self.FK_TovarDel_Tovar" FromRole="Tovar" ToRole="TovarDel" />
-          <NavigationProperty Name="TovarSales" Relationship="Self.FK_TovarSale_Tovar" FromRole="Tovar" ToRole="TovarSale" />
-        </EntityType>
         <EntityType Name="TovarDel">
           <Key>
             <PropertyRef Name="id" />
@@ -262,7 +249,7 @@
           <Property Name="idDel" Type="Int32" Nullable="false" />
           <Property Name="count" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Delivery" Relationship="Self.FK_TovarDel_Delivery" FromRole="TovarDel" ToRole="Delivery" />
-          <NavigationProperty Name="Tovar" Relationship="Self.FK_TovarDel_Tovar" FromRole="TovarDel" ToRole="Tovar" />
+          <NavigationProperty Name="Tovar" Relationship="BooksShopModel.FK_TovarDel_Tovar" FromRole="TovarDel" ToRole="Tovar" />
         </EntityType>
         <EntityType Name="TovarSale">
           <Key>
@@ -273,7 +260,7 @@
           <Property Name="idSell" Type="Int32" Nullable="false" />
           <Property Name="count" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Sell" Relationship="Self.FK_TovarSale_Sell" FromRole="TovarSale" ToRole="Sell" />
-          <NavigationProperty Name="Tovar" Relationship="Self.FK_TovarSale_Tovar" FromRole="TovarSale" ToRole="Tovar" />
+          <NavigationProperty Name="Tovar" Relationship="BooksShopModel.FK_TovarSale_Tovar" FromRole="TovarSale" ToRole="Tovar" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -290,20 +277,6 @@
           <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Sells" Relationship="Self.FK_Sell_User" FromRole="User" ToRole="Sell" />
         </EntityType>
-        <Association Name="FK_Tovar_Category">
-          <End Role="Category" Type="Self.Category" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Tovar" Type="Self.Tovar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="Tovar">
-              <PropertyRef Name="category" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TovarDel_Delivery">
           <End Role="Delivery" Type="Self.Delivery" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -344,47 +317,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TovarDel_Tovar">
-          <End Role="Tovar" Type="Self.Tovar" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="TovarDel" Type="Self.TovarDel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tovar">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="TovarDel">
-              <PropertyRef Name="idTovar" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TovarSale_Tovar">
-          <End Role="Tovar" Type="Self.Tovar" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="TovarSale" Type="Self.TovarSale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tovar">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="TovarSale">
-              <PropertyRef Name="idTovar" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="BooksShopEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Deliveries" EntityType="Self.Delivery" />
           <EntitySet Name="Sells" EntityType="Self.Sell" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="Tovars" EntityType="Self.Tovar" />
           <EntitySet Name="TovarDels" EntityType="Self.TovarDel" />
           <EntitySet Name="TovarSales" EntityType="Self.TovarSale" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_Tovar_Category" Association="Self.FK_Tovar_Category">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="Tovar" EntitySet="Tovars" />
-          </AssociationSet>
           <AssociationSet Name="FK_TovarDel_Delivery" Association="Self.FK_TovarDel_Delivery">
             <End Role="Delivery" EntitySet="Deliveries" />
             <End Role="TovarDel" EntitySet="TovarDels" />
@@ -397,15 +337,76 @@
             <End Role="Sell" EntitySet="Sells" />
             <End Role="TovarSale" EntitySet="TovarSales" />
           </AssociationSet>
-          <AssociationSet Name="FK_TovarDel_Tovar" Association="Self.FK_TovarDel_Tovar">
+          <EntitySet Name="Tovars" EntityType="BooksShopModel.Tovar" />
+          <AssociationSet Name="FK_Tovar_Category" Association="BooksShopModel.FK_Tovar_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Tovar" EntitySet="Tovars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TovarDel_Tovar" Association="BooksShopModel.FK_TovarDel_Tovar">
             <End Role="Tovar" EntitySet="Tovars" />
             <End Role="TovarDel" EntitySet="TovarDels" />
           </AssociationSet>
-          <AssociationSet Name="FK_TovarSale_Tovar" Association="Self.FK_TovarSale_Tovar">
+          <AssociationSet Name="FK_TovarSale_Tovar" Association="BooksShopModel.FK_TovarSale_Tovar">
             <End Role="Tovar" EntitySet="Tovars" />
             <End Role="TovarSale" EntitySet="TovarSales" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
+        <EntityType Name="Tovar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="author" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category1" Relationship="BooksShopModel.FK_Tovar_Category" FromRole="Tovar" ToRole="Category" />
+          <NavigationProperty Name="TovarDels" Relationship="BooksShopModel.FK_TovarDel_Tovar" FromRole="Tovar" ToRole="TovarDel" />
+          <NavigationProperty Name="TovarSales" Relationship="BooksShopModel.FK_TovarSale_Tovar" FromRole="Tovar" ToRole="TovarSale" />
+        </EntityType>
+        <Association Name="FK_Tovar_Category">
+          <End Type="BooksShopModel.Category" Role="Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BooksShopModel.Tovar" Role="Tovar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="Tovar">
+              <PropertyRef Name="category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TovarDel_Tovar">
+          <End Type="BooksShopModel.Tovar" Role="Tovar" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BooksShopModel.TovarDel" Role="TovarDel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tovar">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TovarDel">
+              <PropertyRef Name="idTovar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TovarSale_Tovar">
+          <End Type="BooksShopModel.Tovar" Role="Tovar" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BooksShopModel.TovarSale" Role="TovarSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tovar">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TovarSale">
+              <PropertyRef Name="idTovar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -450,18 +451,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tovars">
-            <EntityTypeMapping TypeName="BooksShopModel.Tovar">
-              <MappingFragment StoreEntitySet="Tovar">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="author" ColumnName="author" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="category" ColumnName="category" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="number" ColumnName="number" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TovarDels">
             <EntityTypeMapping TypeName="BooksShopModel.TovarDel">
               <MappingFragment StoreEntitySet="TovarDel">
@@ -494,6 +483,18 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="papaname" ColumnName="papaname" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tovars">
+            <EntityTypeMapping TypeName="BooksShopModel.Tovar">
+              <MappingFragment StoreEntitySet="Tovar">
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

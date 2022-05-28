@@ -9,17 +9,17 @@
         <EntityTypeShape EntityType="BooksShopModel.Delivery" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BooksShopModel.Sell" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BooksShopModel.sysdiagram" Width="1.5" PointX="5.75" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="BooksShopModel.Tovar" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="BooksShopModel.TovarDel" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BooksShopModel.TovarSale" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BooksShopModel.User" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
-        <AssociationConnector Association="BooksShopModel.FK_Tovar_Category" ManuallyRouted="false" />
         <AssociationConnector Association="BooksShopModel.FK_TovarDel_Delivery" ManuallyRouted="false" />
         <AssociationConnector Association="BooksShopModel.FK_Sell_User" ManuallyRouted="false" />
         <AssociationConnector Association="BooksShopModel.FK_TovarSale_Sell" ManuallyRouted="false" />
-        <AssociationConnector Association="BooksShopModel.FK_TovarDel_Tovar" ManuallyRouted="false" />
-        <AssociationConnector Association="BooksShopModel.FK_TovarSale_Tovar" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="BooksShopModel.Tovar" Width="1.5" PointX="3" PointY="3.5" />
+        <AssociationConnector Association="BooksShopModel.FK_Tovar_Category" />
+        <AssociationConnector Association="BooksShopModel.FK_TovarDel_Tovar" />
+        <AssociationConnector Association="BooksShopModel.FK_TovarSale_Tovar" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

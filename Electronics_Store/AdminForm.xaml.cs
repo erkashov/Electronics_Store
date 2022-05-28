@@ -113,7 +113,10 @@ namespace Electronics_Store
             {
                 Tovar temp = BooksShopEntities.GetContext().Tovars.Find(t.id);
                 if (temp == null) return "Товара с таким id не найдено";
-                temp = t;
+                temp.author = t.author;
+                temp.name = t.name;
+                temp.number = t.number;
+                temp.price = t.price;
                 BooksShopEntities.GetContext().SaveChanges();
             }
             catch (DbEntityValidationException ex)

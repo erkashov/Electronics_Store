@@ -36,7 +36,7 @@ namespace Electronics_Store.Tests
         [TestMethod()]
         public void AddTovarTest3()
         {
-            Tovar t = new Tovar() { author = "Толстой", category = "Худ. литература", name = "Война и мир", number = 100, price = 1200 };
+            Tovar t = new Tovar() { author = "Толстой", category = "Худ. литература", name = "Война и мир", number = 100, price = 1200, Category1 = BooksShopEntities.GetContext().Categories.Find("Худ. литература")};
 
             string expected = "Успешно";
             string actual = AdminForm.AddTovar(t);

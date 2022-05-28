@@ -29,9 +29,9 @@ namespace Electronics_Store
         public virtual DbSet<Delivery> Deliveries { get; set; }
         public virtual DbSet<Sell> Sells { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<Tovar> Tovars { get; set; }
         public virtual DbSet<TovarDel> TovarDels { get; set; }
         public virtual DbSet<TovarSale> TovarSales { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Tovar> Tovars { get; set; }
     }
 }

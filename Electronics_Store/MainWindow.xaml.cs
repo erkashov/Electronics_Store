@@ -27,9 +27,8 @@ namespace Electronics_Store
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Пользователь user = МагазинЭлектроникиEntities.GetContext().Пользователь.Where(p => p.login == loginTb.Text && p.password == passwordTb.Text).FirstOrDefault();
-            /*foreach (Пользователь User in МагазинЭлектроникиEntities.GetContext().Пользователь)
-            {*/
+            User user = Auth(loginTb.Text, passwordTb.Text);
+
             if (user != null)
             {
                 if (user.role == "Менеджер")
@@ -52,6 +51,12 @@ namespace Electronics_Store
                 passwordTb.Text = "";
             }
             else MessageBox.Show("Логин или пароль введен неверно!");
+        }
+
+        public static User Auth(string login, string password)
+        {
+            return BooksShopEntities.GetContext().Users.
+                Where(p => p.login == login && p.password == password).FirstOrDefault();
         }
     }
 }

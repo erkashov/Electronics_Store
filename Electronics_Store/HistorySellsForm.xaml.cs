@@ -22,23 +22,8 @@ namespace Electronics_Store
         public HistorySellsForm()
         {
             InitializeComponent();
-            var list = МагазинЭлектроникиEntities.GetContext().Продажа.ToList();
+            var list = BooksShopEntities.GetContext().TovarSales.ToList();
             DG.ItemsSource = list;
-            /*foreach(Продажа продажа in )
-            {
-                DateTime dt = (DateTime)продажа.date;
-                DG.Items.Add(new
-                {
-                    id = продажа.id,
-                    //FIO = продажа.Пользователь.fullname + продажа.Пользователь.name + продажа.Пользователь.papaname,
-                    name = МагазинЭлектроникиEntities.GetContext().Товар.Find(продажа.idTovar).name,
-                    manufacture = МагазинЭлектроникиEntities.GetContext().Товар.Find(продажа.idTovar).manufacture,
-                    price = МагазинЭлектроникиEntities.GetContext().Товар.Find(продажа.idTovar).price,
-                    type = МагазинЭлектроникиEntities.GetContext().Товар.Find(продажа.idTovar).type,
-                    countTov = продажа.countProd,
-                    DATA = dt.ToShortDateString()
-                });
-            }*/
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

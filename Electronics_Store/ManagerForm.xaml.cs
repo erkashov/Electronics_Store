@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,139 +20,124 @@ namespace Electronics_Store
     /// </summary>
     public partial class ManagerForm : Window
     {
+        private List<string> roles = new List<string>() { "Администратор", "Пользователь", "Менеджер" };
         public ManagerForm(MainWindow mainWindow)
         {
             InitializeComponent();
-            //МОЛОДЕЦ
-            dataGrid.ItemsSource = МагазинЭлектроникиEntities.GetContext().Пользователь.ToList();
+            dataGrid.ItemsSource = BooksShopEntities.GetContext().Users.ToList();
+            RoleCB.ItemsSource = roles;
             mw = mainWindow;
         }
 
         private MainWindow mw;
         private bool isChangeMode = false;
-        private Пользователь CurrentUser;
+        private User CurrentUser;
+
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
-            CurrentUser = (sender as Button).DataContext as Пользователь;
-            FullnameTB.Text = CurrentUser.fullname;
-            NameTB.Text = CurrentUser.name;
-            PapanameTB.Text = CurrentUser.papaname;
-            PhoneTB.Text = CurrentUser.phone;
-            PasswordTB.Text = CurrentUser.password;
-            LoginTB.Text = CurrentUser.login;
-            EmailTB.Text = CurrentUser.email;
-            RoleCB.Text = CurrentUser.role;
+            CurrentUser = dataGrid.SelectedItem as User;
+            stackuser.DataContext = CurrentUser;
             isChangeMode = true;
         }
 
         private void BtnDel_Click(object sender, RoutedEventArgs e)
         {
-            CurrentUser = (sender as Button).DataContext as Пользователь;
+            CurrentUser = (sender as Button).DataContext as User;
             if (MessageBox.Show($"Вы точно хотите удалить {CurrentUser.fullname} {CurrentUser.name} {CurrentUser.papaname}","Внимание",MessageBoxButton.YesNo,MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                МагазинЭлектроникиEntities.GetContext().Пользователь.Remove(CurrentUser);
-                МагазинЭлектроникиEntities.GetContext().SaveChanges();
-               dataGrid.ItemsSource = МагазинЭлектроникиEntities.GetContext().Пользователь.ToList();
+                RemoveUser(CurrentUser);
+               dataGrid.ItemsSource = BooksShopEntities.GetContext().Users.ToList();
                 MessageBox.Show("Пользователь успешно удален!");
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(FullnameTB.Text!="" && NameTB.Text != "" &&  PapanameTB.Text != "" && PhoneTB.Text!="" && Int64.TryParse(PhoneTB.Text, out long i) && PasswordTB.Text !="" && LoginTB.Text != "" && EmailTB.Text != "" && RoleCB.Text != "")
+            if (isChangeMode)
             {
-                if(FullnameTB.Text.All(char.IsLetter) && NameTB.Text.All(char.IsLetter) && PapanameTB.Text.All(char.IsLetter))
-                {
-                    if (isChangeMode)
-                    {
-                        for (int j = 0; j< МагазинЭлектроникиEntities.GetContext().Пользователь.ToList().Count; j++)
-                        {
-                            Пользователь user = МагазинЭлектроникиEntities.GetContext().Пользователь.ToList()[j];
-                            if (user.id == CurrentUser.id)
-                            {
-                                foreach (Пользователь userr in МагазинЭлектроникиEntities.GetContext().Пользователь)
-                                {
-                                    if (userr.id == CurrentUser.id)
-                                        continue;
-                                    if (userr.name == NameTB.Text && userr.papaname == PapanameTB.Text && userr.fullname == FullnameTB.Text)
-                                    {
-                                        MessageBox.Show("Пользователь с таким ФИО уже существует");
-                                        return;
-                                    }
-                                    if (userr.login == LoginTB.Text || userr.password == PasswordTB.Text)
-                                    {
-                                        MessageBox.Show("Пользователь с таким логином или паролем уже существует");
-                                        return;
-                                    }
-                                }
-                                user.name = NameTB.Text;
-                                user.fullname = FullnameTB.Text;
-                                user.email = EmailTB.Text;
-                                user.login = LoginTB.Text;
-                                user.papaname = PapanameTB.Text;
-                                user.password = PasswordTB.Text;
-                                user.phone = PhoneTB.Text;
-                                user.role = RoleCB.Text;
-                                МагазинЭлектроникиEntities.GetContext().SaveChanges();
-                                dataGrid.ItemsSource = МагазинЭлектроникиEntities.GetContext().Пользователь.ToList();
-                                MessageBox.Show("Данные успешно изменены!");
-                                Button_Click_1(sender, e);
-                                CurrentUser = null;
-                                return;
-                            }
-                        }
-                    }
-                    foreach (Пользователь user in МагазинЭлектроникиEntities.GetContext().Пользователь)
-                    {
-                        if(user.name == NameTB.Text && user.papaname == PapanameTB.Text && user.fullname == FullnameTB.Text)
-                        {
-                            MessageBox.Show("Пользователь с таким ФИО уже существует");
-                            return;
-                        }
-                        if(user.login == LoginTB.Text || user.password == PasswordTB.Text)
-                        {
-                            MessageBox.Show("Пользователь с таким логином или паролем уже существует");
-                            return;
-                        }
-                    }
-                    МагазинЭлектроникиEntities.GetContext().Пользователь.Add(new Пользователь() {name = NameTB.Text, fullname = FullnameTB.Text, 
-                        email = EmailTB.Text, login = LoginTB.Text, papaname = PapanameTB.Text, password = PasswordTB.Text, phone = PhoneTB.Text, role = RoleCB.Text });
-                    try
-                    {
-                        МагазинЭлектроникиEntities.GetContext().SaveChanges();
-                        MessageBox.Show("Новый пользователь успешно добавлен!");
-                        Button_Click_1(sender, e);
-                        dataGrid.ItemsSource = МагазинЭлектроникиEntities.GetContext().Пользователь.ToList();
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                    return;
-                }
-                else
-                {
-                    MessageBox.Show("ФИО не должно содержать цифры!!!");
-                    return;
-                }
+                MessageBox.Show(Change(CurrentUser));
+                Button_Click_1(null, null);
+                dataGrid.ItemsSource = BooksShopEntities.GetContext().Users.ToList();
             }
             else
             {
-                MessageBox.Show("Не все поля заполнены!!!");
-                return;
+                User new_user = new User(FullnameTB.Text, NameTB.Text, PapanameTB.Text, LoginTB.Text, PasswordTB.Text, PhoneTB.Text, EmailTB.Text);
+                MessageBox.Show(Reg(new_user));
+                Button_Click_1(null, null);
+                dataGrid.ItemsSource = BooksShopEntities.GetContext().Users.ToList();
+
+            }
+        }
+
+        public static string Reg(User u)
+        {
+            if (u == null) return "Укажите пользователя";
+            if (u.login == "" || u.password == "" || u.role == "" || u.fullname == "" || u.name == "" || u.phone == "") return "Не все поля заполнены";
+            if (!u.name.All(char.IsLetter) || !u.fullname.All(char.IsLetter) || !u.papaname.All(char.IsLetter)) return "ФИО не должно содержать цифры";
+            if (BooksShopEntities.GetContext().Users.Where(p => p.login == u.login).FirstOrDefault() != null) return "Пользователь с таким логином существует";
+            if (BooksShopEntities.GetContext().Users.Where(p => p.phone == u.phone).FirstOrDefault() != null) return "Пользователь с таким телефоном существует";
+            try
+            {
+                BooksShopEntities.GetContext().Users.Add(u);
+                BooksShopEntities.GetContext().SaveChanges();
+                return "Успешно";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                return ex.EntityValidationErrors.First().ValidationErrors.First().ErrorMessage;
+            }
+            catch (Exception e)
+            {
+                return e.InnerException.InnerException.Message;
+            }
+        }
+
+        public static string Change(User u)
+        {
+            if (u == null) return "Укажите пользователя";
+            if (u.login == "" || u.password == "" || u.role == "" || u.fullname == "" || u.name == "" || u.phone == "") return "Не все поля заполнены";
+            if (!u.name.All(char.IsLetter) || !u.fullname.All(char.IsLetter) || !u.papaname.All(char.IsLetter)) return "ФИО не должно содержать цифры";
+            try
+            {
+                User temp = BooksShopEntities.GetContext().Users.Where(p => p.login == u.login).FirstOrDefault();
+                if (temp == null) return "Пользователя с таким логином не существует";
+                if (BooksShopEntities.GetContext().Users.Where(p => p.phone == u.phone && p.id != temp.id).Count() > 0) return "Пользователь с таким номером уже существует";
+                temp = u;
+                BooksShopEntities.GetContext().SaveChanges();
+                return "Успешно";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                return ex.EntityValidationErrors.First().ValidationErrors.First().ErrorMessage;
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+
+        public static string RemoveUser(User user)
+        {
+            if (user == null) return "Укажите пользователя";
+            try
+            {
+                User temp = BooksShopEntities.GetContext().Users.Where(p => p.login == user.login).FirstOrDefault();
+                if (temp == null) return "Пользователя с таким логином не существует";
+                BooksShopEntities.GetContext().Users.Remove(temp);
+                BooksShopEntities.GetContext().SaveChanges();
+                return "Успешно";
+            }
+            catch(Exception ex)
+            {
+                return ex.Message;
             }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            FullnameTB.Text = "";
-            NameTB.Text = "";
-            PapanameTB.Text = "";
-            PhoneTB.Text = "";
-            PasswordTB.Text = "";
-            LoginTB.Text = "";
-            EmailTB.Text = "";
-            RoleCB.Text = "";
+            CurrentUser = new User("", "", "", "", "", "", "");
+            stackuser.DataContext = null;
+            stackuser.DataContext = CurrentUser;
             isChangeMode = false;
         }
 

@@ -4,21 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Electronics_Store"
-        mc:Ignorable="d"
-        Title="HistorySellsForm" Height="450" Width="1100"
+        mc:Ignorable="d" Height="450" Width="1100"
         WindowStartupLocation="CenterScreen"
         >
     <Grid>
         <DataGrid Grid.Row="1" x:Name="DG" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="id" Width="0.2*" Binding="{Binding id}"></DataGridTextColumn>
-                <DataGridTextColumn Header="ФИО сотрудника" Width="1.5*" Binding="{Binding FIO}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Наименование" Width="*" Binding="{Binding Товар.name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Производитель" Width="*" Binding="{Binding Товар.manufacture}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Стоимость" Width="0.45*" Binding="{Binding Товар.price}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Категория" Width="1.2*" Binding="{Binding Товар.type}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Количество" Width="0.5*" Binding="{Binding countProd}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Дата" Width="0.5*" Binding="{Binding date, StringFormat=\{0:dd.MM.yy\}}"></DataGridTextColumn>
+                <DataGridTextColumn Header="ФИО сотрудника" Width="1.5*" Binding="{Binding Sell.FIO}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Наименование" Width="*" Binding="{Binding Tovar.name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Автор" Width="*" Binding="{Binding Tovar.author}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Стоимость" Width="0.45*" Binding="{Binding Tovar.price}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Категория" Width="1.2*" Binding="{Binding Tovar.category}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Количество" Width="0.5*" Binding="{Binding count}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Дата" Width="0.5*" Binding="{Binding Sell.date, StringFormat=\{0:dd.MM.yy\}}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

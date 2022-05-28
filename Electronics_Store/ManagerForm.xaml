@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Electronics_Store"
-        mc:Ignorable="d"
-        Title="ManagerForm" Height="542" Width="1500"
+        mc:Ignorable="d" Height="542" Width="1500"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -39,26 +38,23 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel>
+        <StackPanel x:Name="stackuser">
             <Label Content="Фамилия" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
-            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="FullnameTB"></TextBox>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="FullnameTB" Text="{Binding fullname}"></TextBox>
             <Label Content="Имя" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
-            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="NameTB"></TextBox>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="NameTB" Text="{Binding name}"></TextBox>
             <Label Content="Отчество" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
-            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="PapanameTB"></TextBox>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="PapanameTB" Text="{Binding papaname}"></TextBox>
             <Label Content="Телефон" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
-            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="PhoneTB"></TextBox>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="PhoneTB" Text="{Binding phone}"></TextBox>
             <Label Content="Логин" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
-            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="LoginTB"></TextBox>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="LoginTB" Text="{Binding login}"></TextBox>
             <Label Content="Пароль" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
-            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="PasswordTB"></TextBox>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="PasswordTB" Text="{Binding password}"></TextBox>
             <Label Content="Почта" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
-            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="EmailTB"></TextBox>
+            <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="EmailTB" Text="{Binding email}"></TextBox>
             <Label Content="Роль" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
-            <ComboBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="RoleCB">
-                <ComboBoxItem Content="Пользователь"></ComboBoxItem>
-                <ComboBoxItem Content="Администратор"></ComboBoxItem>
-                <ComboBoxItem Content="Менеджер"></ComboBoxItem>
+            <ComboBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" x:Name="RoleCB" SelectedValue="{Binding role}" >
             </ComboBox>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -69,7 +65,11 @@
                 <Button Grid.Column="1" Margin="10 10 10 0" FontFamily="Comic Sans MS" Height="30" FontSize="14" Content="Сброс" Background="#FFFFCCCC" Click="Button_Click_1"></Button>
             </Grid>
             <Grid>
-                <Button  Background="#FFFF6464" Margin="10" FontSize="14" Height="30" Content="История продаж"  Name="HistorySellsBut" Click="HistorySellsBut_Click"></Button>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="196*"/>
+                    <ColumnDefinition Width="347*"/>
+                </Grid.ColumnDefinitions>
+                <Button  Background="#FFFF6464" Margin="10" FontSize="14" Height="30" Content="История продаж"  Name="HistorySellsBut" Click="HistorySellsBut_Click" Grid.ColumnSpan="2"></Button>
             </Grid>
         </StackPanel>
     </Grid>

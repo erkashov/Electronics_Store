@@ -4,22 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Electronics_Store"
-        mc:Ignorable="d"
-        Title="AddOrEditSellForm" Height="413.782" Width="410.664"
+        mc:Ignorable="d" Height="413.782" Width="410.664"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         >
     <Grid>
         <StackPanel>
             <Label Content="Добавление товара" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Margin="10" FontFamily="Comic Sans MS" Name="ItogStoimLabel"></Label>
-            <Label Content="Категория товара" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
-            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="TypeTovCB" SelectionChanged="TypeTovCB_SelectionChanged"></ComboBox>
-            <Label Content="Наименование товара" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
-            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="NameTovCB" SelectionChanged="NameTovCB_SelectionChanged"></ComboBox>
-            <Label Content="Производитель" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
-            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="ManufTovCB" SelectionChanged="ManufTovCB_SelectionChanged"></ComboBox>
+            <Label Content="Категория" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
+            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="TypeTovCB" SelectionChanged="TypeTovCB_SelectionChanged" DisplayMemberPath="name"  SelectedValue="{Binding Tovar.category}" SelectedValuePath="name"></ComboBox>
+            <Label Content="Наименование" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
+            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="NameTovCB" SelectionChanged="NameTovCB_SelectionChanged" DisplayMemberPath="name" SelectedValue="{Binding Tovar.name}" SelectedValuePath="name"></ComboBox>
+            <Label Content="Автор" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
+            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="ManufTovCB" SelectionChanged="ManufTovCB_SelectionChanged" DisplayMemberPath="author" SelectedValue="{Binding Tovar.author}" SelectedValuePath="author"></ComboBox>
             <Label Content="Количество товаров (остаток на складе: )" FontFamily="Comic Sans MS" Margin="10 0 10 0" Name="CountAtStorageLab"></Label>
-            <TextBox FontFamily="Comic Sans MS" IsEnabled="False" Margin="10 0 10 10" Name="CountTovTB" TextChanged="CountTovTB_TextChanged"></TextBox>
+            <TextBox FontFamily="Comic Sans MS" IsEnabled="False" Margin="10 0 10 10" Name="CountTovTB" TextChanged="CountTovTB_TextChanged" Text="{Binding count}"></TextBox>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -27,7 +26,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <Label Content="Цена за шт:" FontSize="12" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
-                    <TextBlock FontSize="12" FontFamily="Comic Sans MS" Margin="10 0 10 0" Background="#FFECECEC" Name="PriceForOneTB"></TextBlock>
+                    <TextBlock FontSize="12" FontFamily="Comic Sans MS" Margin="10 0 10 0" Background="#FFECECEC" Name="PriceForOneTB" Text="{Binding Tovar.price}"></TextBlock>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <Label Content="Цена за все:" FontSize="12" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>

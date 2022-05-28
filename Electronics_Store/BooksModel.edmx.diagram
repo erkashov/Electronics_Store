@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f4b8526b5d7143bab3cf908357977e81" Name="Diagram1">
+        <EntityTypeShape EntityType="BooksShopModel.Category" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BooksShopModel.Delivery" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BooksShopModel.Sell" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BooksShopModel.sysdiagram" Width="1.5" PointX="5.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="BooksShopModel.Tovar" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BooksShopModel.TovarDel" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BooksShopModel.TovarSale" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BooksShopModel.User" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <AssociationConnector Association="BooksShopModel.FK_Tovar_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="BooksShopModel.FK_TovarDel_Delivery" ManuallyRouted="false" />
+        <AssociationConnector Association="BooksShopModel.FK_Sell_User" ManuallyRouted="false" />
+        <AssociationConnector Association="BooksShopModel.FK_TovarSale_Sell" ManuallyRouted="false" />
+        <AssociationConnector Association="BooksShopModel.FK_TovarDel_Tovar" ManuallyRouted="false" />
+        <AssociationConnector Association="BooksShopModel.FK_TovarSale_Tovar" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

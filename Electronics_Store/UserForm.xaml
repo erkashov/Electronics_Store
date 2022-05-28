@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Electronics_Store"
-        mc:Ignorable="d"
-        Title="UserForm" Height="458.149" Width="864.286" Closing="Window_Closing"
+        mc:Ignorable="d"  Height="458.149" Width="864.286" Closing="Window_Closing"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -16,12 +15,11 @@
         <Label Grid.Row="0" Content="Корзина" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS"></Label>
         <DataGrid Grid.Row="1" x:Name="DG" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header=" " Width="0.2*" Binding="{Binding id}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Наименование" Width="*" Binding="{Binding name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Производитель" Width="*" Binding="{Binding manufacture}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Стоимость" Width="0.45*" Binding="{Binding price}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Категория" Width="1.2*" Binding="{Binding type}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Количество" Width="0.5*" Binding="{Binding countTov}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Наименование" Width="*" Binding="{Binding Tovar.name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Автор" Width="*" Binding="{Binding Tovar.author}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Стоимость" Width="0.45*" Binding="{Binding Tovar.price}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Категория" Width="1.2*" Binding="{Binding Tovar.category}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Количество" Width="0.5*" Binding="{Binding count}"></DataGridTextColumn>
                 <DataGridTemplateColumn Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,83 +21,57 @@ namespace Electronics_Store
     public partial class AddOrEditSellForm : Window
     {
         private UserForm userForm;
-        public AddOrEditSellForm(UserForm UF)
+        private bool isPost = false;
+        public AddOrEditSellForm(UserForm UF, bool post = false)
         {
             userForm = UF;
+            isPost = post;
             InitializeComponent();
-            foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
-            {
-                if (!TypeTovCB.Items.Contains(товар.type))
-                {
-                    TypeTovCB.Items.Add(товар.type);
-                }
-            }
+            TypeTovCB.ItemsSource = BooksShopEntities.GetContext().Categories.ToList();
         }
 
-        private Продажа curprod;
+        private TovarSale CurTovar;
+        private TovarDel CurTovarDel;
         private bool editmode = false;
-        public AddOrEditSellForm(UserForm UF, Продажа продажа)
+        public AddOrEditSellForm(UserForm UF, TovarSale tovar)
         {
             InitializeComponent();
             editmode = true;
             userForm = UF;
-            curprod = продажа;
+            CurTovar = tovar;
             SaveBut.IsEnabled = true;
+            TypeTovCB.ItemsSource = BooksShopEntities.GetContext().Categories.ToList();
+            NameTovCB.ItemsSource = BooksShopEntities.GetContext().Tovars.Where(p => p.category == tovar.Tovar.category).ToList();
+            ManufTovCB.ItemsSource = BooksShopEntities.GetContext().Tovars.Where(p => p.author == tovar.Tovar.author).ToList();
             ItogStoimLabel.Content = "Изменение товара";
-            foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
-            {
-                if (!TypeTovCB.Items.Contains(товар.type))
-                {
-                    TypeTovCB.Items.Add(товар.type);
-                }
-            }
-            TypeTovCB.Text = продажа.Товар.type;
-            NameTovCB.Text = продажа.Товар.name;
-            ManufTovCB.Text = продажа.Товар.manufacture;
-            CountTovTB.Text = продажа.countProd.ToString();
+            this.DataContext = tovar;
+            
         }
 
         private void TypeTovCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            NameTovCB.Items.Clear();
             PriceForOneTB.Text = "";
             PriceForSeveralTB.Text = "";
-            ManufTovCB.Items.Clear();
             CountTovTB.Text = "";
             CountAtStorageLab.Content = "Количество товаров (остаток на складе: )";
             CountTovTB.IsEnabled = false;
             SaveBut.IsEnabled = false;
-            foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
-            {
-                if (TypeTovCB.SelectedItem == null)
-                    return;
-                if (TypeTovCB.SelectedItem.ToString() == товар.type && !NameTovCB.Items.Contains(товар.name))
-                {
-                    NameTovCB.Items.Add(товар.name);
-                }
-            }
+            Category selected = TypeTovCB.SelectedItem as Category;
+            NameTovCB.ItemsSource = BooksShopEntities.GetContext().Tovars.Where(p => p.category == selected.name).ToList();
         }
 
         private void NameTovCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             PriceForOneTB.Text = "";
             PriceForSeveralTB.Text = "";
-            ManufTovCB.Items.Clear();
             CountTovTB.Text = "";
             CountAtStorageLab.Content = "Количество товаров (остаток на складе: )";
             CountTovTB.IsEnabled = false;
             SaveBut.IsEnabled = false;
-            foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
-            {
-                if (NameTovCB.SelectedItem == null)
-                    return;
-                if (NameTovCB.SelectedItem.ToString() == товар.name && !ManufTovCB.Items.Contains(товар.manufacture))
-                {
-                    ManufTovCB.Items.Add(товар.manufacture);
-                }
-            }
+            Tovar selected = NameTovCB.SelectedItem as Tovar;
+            ManufTovCB.ItemsSource = BooksShopEntities.GetContext().Tovars.Where(p => p.author == selected.author).ToList();
         }
-        private Товар CurrentTov = null;
+
         private void ManufTovCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             negr = 0;
@@ -105,90 +80,122 @@ namespace Electronics_Store
             CountTovTB.Text = "";
             CountTovTB.IsEnabled = true;
             SaveBut.IsEnabled = false;
-            foreach (Товар товар in МагазинЭлектроникиEntities.GetContext().Товар)
-            {
-                if (TypeTovCB.SelectedItem == null || NameTovCB.SelectedItem == null || ManufTovCB.SelectedItem == null)
-                    return;
-                if (TypeTovCB.SelectedItem.ToString() == товар.type && NameTovCB.SelectedItem.ToString() == товар.name && ManufTovCB.SelectedItem.ToString() == товар.manufacture)
-                {
-                    CurrentTov = товар;
-                    if (!editmode)
-                    {
-                        foreach (Продажа продажа in userForm.SellsList)
-                        {
-                            if (продажа.Товар == CurrentTov)
-                            {
-                                negr += продажа.countProd;
-                            }
-                        }
-                    }
-                    CountAtStorageLab.Content = $"Количество товаров (остаток на складе: {товар.number - negr})";
-                    PriceForOneTB.Text = товар.price.ToString();
-                    return;
-                }
-            }
+            if (ManufTovCB.SelectedItem == null) return;
+            Tovar selected = ManufTovCB.SelectedItem as Tovar;
+            CountAtStorageLab.Content = $"Количество товаров (остаток на складе: {selected.number})";
+            PriceForOneTB.Text = selected.price.ToString();
         }
         private int negr;
         private void CountTovTB_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (CountTovTB.Text == "")
-                return;
-            if (Int32.TryParse(CountTovTB.Text, out int count))
+            if (!isPost)
             {
-                if (count > 0)
+                if (CountTovTB.Text == "")
+                    return;
+                if (ManufTovCB.SelectedItem as Tovar == null) return;
+                if (Int32.TryParse(CountTovTB.Text, out int count))
                 {
-                    if (count <= (CurrentTov.number - negr))
+                    if (count > 0)
                     {
-                        PriceForSeveralTB.Text = (count * CurrentTov.price).ToString();
-                        SaveBut.IsEnabled = true;
-                        return;
+                        if (count <= ((ManufTovCB.SelectedItem as Tovar).number - negr))
+                        {
+                            PriceForSeveralTB.Text = (count * (ManufTovCB.SelectedItem as Tovar).price).ToString();
+                            SaveBut.IsEnabled = true;
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Товара недостаточно на складе!");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Товара недостаточно на складе!");
+                        MessageBox.Show("Нельзя сформировать продажу с числом товаров 0 или менее!");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Нельзя сформировать продажу с числом товаров 0 или менее!");
+                    MessageBox.Show("Количество должно быть числом!");
+                    CountTovTB.Text = "";
                 }
+                SaveBut.IsEnabled = false;
             }
             else
             {
-                MessageBox.Show("Количество должно быть числом!");
-                CountTovTB.Text = "";
+                SaveBut.IsEnabled = true;
             }
-            SaveBut.IsEnabled = false;
         }
 
         private void SaveBut_Click(object sender, RoutedEventArgs e)
         {
-            if (editmode)
+            if (ManufTovCB.SelectedItem as Tovar == null) return;
+            if (!isPost)
             {
-                for (int i = 0; i < userForm.SellsList.Count; i++)
+                if (editmode)
                 {
-                    if (curprod == userForm.SellsList[i])
+                    if (ManufTovCB.SelectedItem == null) return;
+                    try
                     {
-                        userForm.SellsList[i] = new Продажа() { countProd = Int32.Parse(CountTovTB.Text), date = DateTime.Now, Товар = CurrentTov, idTovar = CurrentTov.id, idUser = userForm.CurrentUser.id, Пользователь = userForm.CurrentUser };
-                        userForm.filldatagrid();
+                        TovarSale temp = BooksShopEntities.GetContext().TovarSales.Find(CurTovar.id);
+                        temp = CurTovar;
+                        BooksShopEntities.GetContext().SaveChanges();
                         this.Close();
-                        return;
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        MessageBox.Show(ex.EntityValidationErrors.First().ValidationErrors.First().ErrorMessage);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
                     }
                 }
-            }
-            for (int i = 0; i < userForm.SellsList.Count; i++)
-            {
-                if (CurrentTov == userForm.SellsList[i].Товар)
+                else
                 {
-                    userForm.SellsList[i].countProd += Int32.Parse(CountTovTB.Text);
+                    userForm.SellsList.Add(new TovarSale()
+                    {
+                        Sell = userForm.CurrSell,
+                        Tovar = (ManufTovCB.SelectedItem as Tovar),
+                        count = Convert.ToInt32(CountTovTB.Text),
+                        idTovar = (ManufTovCB.SelectedItem as Tovar).id
+                    });
                     userForm.filldatagrid();
                     this.Close();
-                    return;
                 }
             }
-            userForm.SellsList.Add(new Продажа() { countProd = Int32.Parse(CountTovTB.Text), date = DateTime.Now, Товар = CurrentTov, idTovar = CurrentTov.id, idUser = userForm.CurrentUser.id, Пользователь = userForm.CurrentUser });
-            userForm.filldatagrid();
-            this.Close();
+            else
+            {
+                if (editmode)
+                {
+                    if (ManufTovCB.SelectedItem == null) return;
+                    try
+                    {
+                        TovarDel temp = BooksShopEntities.GetContext().TovarDels.Find(CurTovarDel.id);
+                        temp = CurTovarDel;
+                        BooksShopEntities.GetContext().SaveChanges();
+                        this.Close();
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        MessageBox.Show(ex.EntityValidationErrors.First().ValidationErrors.First().ErrorMessage);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                else
+                {
+                    userForm.ad.tovarDels.Add(new TovarDel()
+                    {
+                        Delivery = userForm.ad.CurrDel,
+                        Tovar = (ManufTovCB.SelectedItem as Tovar),
+                        count = Convert.ToInt32(CountTovTB.Text)
+                    });
+                    userForm.filldatagrid();
+                    this.Close();
+                }
+            }
         }
     }
 }

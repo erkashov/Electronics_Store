@@ -12,7 +12,7 @@
         <StackPanel>
             <Label Content="Добавление товара" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" Margin="10" FontFamily="Comic Sans MS" Name="ItogStoimLabel"></Label>
             <Label Content="Категория" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
-            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="TypeTovCB" SelectionChanged="TypeTovCB_SelectionChanged" DisplayMemberPath="name"  SelectedValue="{Binding Tovar.category}" SelectedValuePath="name"></ComboBox>
+            <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="TypeTovCB" SelectionChanged="TypeTovCB_SelectionChanged" SelectedValue="{Binding Tovar.category}"></ComboBox>
             <Label Content="Наименование" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>
             <ComboBox FontFamily="Comic Sans MS" Margin="10 0 10 10" Name="NameTovCB" SelectionChanged="NameTovCB_SelectionChanged" DisplayMemberPath="name" SelectedValue="{Binding Tovar.name}" SelectedValuePath="name"></ComboBox>
             <Label Content="Автор" FontFamily="Comic Sans MS" Margin="10 0 10 0"></Label>

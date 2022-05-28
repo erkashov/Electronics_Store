@@ -29,7 +29,7 @@ namespace Electronics_Store
         {
             InitializeComponent();
             dataGridt.ItemsSource = BooksShopEntities.GetContext().Tovars.ToList();
-            typeTCB.ItemsSource = BooksShopEntities.GetContext().Categories.ToList();
+            typeTCB.ItemsSource = BooksShopEntities.GetContext().Tovars.Select(p => p.category).Distinct().ToList(); 
             StatusTPTB.ItemsSource = statuses;
             dataGridPos.ItemsSource = BooksShopEntities.GetContext().Deliveries.ToList();
             mv = main;
@@ -45,7 +45,7 @@ namespace Electronics_Store
         private void filldatagrid()
         {
             dataGridt.ItemsSource = BooksShopEntities.GetContext().Tovars.ToList();
-            typeTCB.ItemsSource = BooksShopEntities.GetContext().Categories.ToList();
+            typeTCB.ItemsSource = BooksShopEntities.GetContext().Tovars.Select(p => p.category).Distinct().ToList();
             dataGridPos.ItemsSource = BooksShopEntities.GetContext().Deliveries.ToList();
         }
 
@@ -59,12 +59,6 @@ namespace Electronics_Store
             if (Int32.TryParse(priceTTB.Text, out int pr) && Int32.TryParse(numberTTB.Text, out int num))
             {
                 CurrentTov.category = typeTCB.Text;
-                Category cat = BooksShopEntities.GetContext().Categories.Find(CurrentTov.category);
-                if(cat == null)
-                {
-                    BooksShopEntities.GetContext().Categories.Add(new Category() { name = CurrentTov.category });
-                    BooksShopEntities.GetContext().SaveChanges();
-                }
                 string mes = "";
                 if (IsEditTov)
                 {
@@ -138,6 +132,7 @@ namespace Electronics_Store
                 BooksShopEntities.GetContext().Tovars.Remove(t);
                 BooksShopEntities.GetContext().SaveChanges();
                 return "Успешно";
+
             }
             catch (Exception ex)
             {

@@ -86,9 +86,6 @@
       <DependentUpon>BooksModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="BooksShopEntities.cs" />
-    <Compile Include="Category.cs">
-      <DependentUpon>BooksModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Delivery.cs">
       <DependentUpon>BooksModel.tt</DependentUpon>
     </Compile>

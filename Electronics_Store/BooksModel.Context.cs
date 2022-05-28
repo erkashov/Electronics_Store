@@ -25,7 +25,6 @@ namespace Electronics_Store
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Delivery> Deliveries { get; set; }
         public virtual DbSet<Sell> Sells { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }

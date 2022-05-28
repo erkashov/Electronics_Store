@@ -27,7 +27,7 @@ namespace Electronics_Store
             userForm = UF;
             isPost = post;
             InitializeComponent();
-            TypeTovCB.ItemsSource = BooksShopEntities.GetContext().Categories.ToList();
+            TypeTovCB.ItemsSource = BooksShopEntities.GetContext().Tovars.Select(p => p.category).Distinct().ToList();
         }
 
         private TovarSale CurTovar;
@@ -40,7 +40,7 @@ namespace Electronics_Store
             userForm = UF;
             CurTovar = tovar;
             SaveBut.IsEnabled = true;
-            TypeTovCB.ItemsSource = BooksShopEntities.GetContext().Categories.ToList();
+            TypeTovCB.ItemsSource = BooksShopEntities.GetContext().Tovars.Select(p => p.category).Distinct().ToList();
             NameTovCB.ItemsSource = BooksShopEntities.GetContext().Tovars.Where(p => p.category == tovar.Tovar.category).ToList();
             ManufTovCB.ItemsSource = BooksShopEntities.GetContext().Tovars.Where(p => p.author == tovar.Tovar.author).ToList();
             ItogStoimLabel.Content = "Изменение товара";
@@ -56,8 +56,8 @@ namespace Electronics_Store
             CountAtStorageLab.Content = "Количество товаров (остаток на складе: )";
             CountTovTB.IsEnabled = false;
             SaveBut.IsEnabled = false;
-            Category selected = TypeTovCB.SelectedItem as Category;
-            NameTovCB.ItemsSource = BooksShopEntities.GetContext().Tovars.Where(p => p.category == selected.name).ToList();
+            NameTovCB.ItemsSource = null;
+            NameTovCB.ItemsSource = BooksShopEntities.GetContext().Tovars.Where(p => p.category == TypeTovCB.SelectedItem.ToString()).ToList();
         }
 
         private void NameTovCB_SelectionChanged(object sender, SelectionChangedEventArgs e)

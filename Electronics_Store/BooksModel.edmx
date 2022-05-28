@@ -5,12 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="BooksShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="name" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="Delivery">
           <Key>
             <PropertyRef Name="id" />
@@ -94,20 +88,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tovar_Category">
-          <End Role="Category" Type="Self.Category" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Tovar" Type="Self.Tovar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="Tovar">
-              <PropertyRef Name="category" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TovarDel_Delivery">
           <End Role="Delivery" Type="Self.Delivery" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -165,7 +145,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="BooksShopModelStoreContainer">
-          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sell" EntityType="Self.Sell" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -176,10 +155,6 @@
           <AssociationSet Name="FK_Sell_User" Association="Self.FK_Sell_User">
             <End Role="User" EntitySet="User" />
             <End Role="Sell" EntitySet="Sell" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tovar_Category" Association="Self.FK_Tovar_Category">
-            <End Role="Category" EntitySet="Category" />
-            <End Role="Tovar" EntitySet="Tovar" />
           </AssociationSet>
           <AssociationSet Name="FK_TovarDel_Delivery" Association="Self.FK_TovarDel_Delivery">
             <End Role="Delivery" EntitySet="Delivery" />
@@ -202,13 +177,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BooksShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="name" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Tovars" Relationship="BooksShopModel.FK_Tovar_Category" FromRole="Category" ToRole="Tovar" />
-        </EntityType>
         <EntityType Name="Delivery">
           <Key>
             <PropertyRef Name="id" />
@@ -318,7 +286,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="BooksShopEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Deliveries" EntityType="Self.Delivery" />
           <EntitySet Name="Sells" EntityType="Self.Sell" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
@@ -338,10 +305,6 @@
             <End Role="TovarSale" EntitySet="TovarSales" />
           </AssociationSet>
           <EntitySet Name="Tovars" EntityType="BooksShopModel.Tovar" />
-          <AssociationSet Name="FK_Tovar_Category" Association="BooksShopModel.FK_Tovar_Category">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="Tovar" EntitySet="Tovars" />
-          </AssociationSet>
           <AssociationSet Name="FK_TovarDel_Tovar" Association="BooksShopModel.FK_TovarDel_Tovar">
             <End Role="Tovar" EntitySet="Tovars" />
             <End Role="TovarDel" EntitySet="TovarDels" />
@@ -361,24 +324,9 @@
           <Property Name="category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="price" Type="Int32" Nullable="false" />
           <Property Name="number" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Category1" Relationship="BooksShopModel.FK_Tovar_Category" FromRole="Tovar" ToRole="Category" />
           <NavigationProperty Name="TovarDels" Relationship="BooksShopModel.FK_TovarDel_Tovar" FromRole="Tovar" ToRole="TovarDel" />
           <NavigationProperty Name="TovarSales" Relationship="BooksShopModel.FK_TovarSale_Tovar" FromRole="Tovar" ToRole="TovarSale" />
         </EntityType>
-        <Association Name="FK_Tovar_Category">
-          <End Type="BooksShopModel.Category" Role="Category" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BooksShopModel.Tovar" Role="Tovar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="Tovar">
-              <PropertyRef Name="category" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TovarDel_Tovar">
           <End Type="BooksShopModel.Tovar" Role="Tovar" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -413,13 +361,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="BooksShopModelStoreContainer" CdmEntityContainer="BooksShopEntities">
-          <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="BooksShopModel.Category">
-              <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Deliveries">
             <EntityTypeMapping TypeName="BooksShopModel.Delivery">
               <MappingFragment StoreEntitySet="Delivery">

@@ -45,7 +45,7 @@
                         <Label Content="Наименование" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
                         <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="nameTTB" Text="{Binding name}"></TextBox>
                         <Label Content="Категория" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
-                        <ComboBox IsEditable="True" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="typeTCB" DisplayMemberPath="name" SelectedValue="{Binding category}" SelectedValuePath="name">
+                        <ComboBox IsEditable="True" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="typeTCB" SelectedValue="{Binding category}">
                         </ComboBox>
                         <Label Content="Автор" Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14"></Label>
                         <TextBox Margin="10 0 10 0" FontFamily="Comic Sans MS" FontSize="14" Name="manufactureTTB" Text="{Binding author}"></TextBox>

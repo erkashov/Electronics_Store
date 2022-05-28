@@ -80,9 +80,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Electronics_Store\Electronics_Store.csproj">
+    <ProjectReference Include="..\Electronics_Store\BookShop.csproj">
       <Project>{C1B1A7C0-AC15-48C4-9087-CADD78E8FC80}</Project>
-      <Name>Electronics_Store</Name>
+      <Name>BookShop</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
